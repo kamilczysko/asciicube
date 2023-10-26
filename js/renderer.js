@@ -18,7 +18,7 @@ let output = Array(screenSize).fill(" ")
 let zBuffer = Array(screenSize).fill(0)
 
 function getScreenMap(ooz, char, x, y) {
-    const xp = parseInt((width / 5) + (K1 * ooz * x));
+    const xp = parseInt((width / 4) + (K1 * ooz * x));
     const yp = parseInt((height / 5) + (K1 * ooz * y));
     const index = parseInt(yp * width + xp)
     if (zBuffer[index] < ooz) {
@@ -42,17 +42,17 @@ const a32 = new SinglePiece({ x: -pieceWidth, y: pieceHeight, z: -3 * pieceWidth
 const a33 = new SinglePiece({ x: pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charA, K2, saveLocation);
 //#2
 const charB = "O";
-const b11 = new SinglePiece({ x: -3 * pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, true);
-const b12 = new SinglePiece({ x: -pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, true);
-const b13 = new SinglePiece({ x: pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, true);
+const b11 = new SinglePiece({ x: -3 * pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, -1);
+const b12 = new SinglePiece({ x: -pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, -1);
+const b13 = new SinglePiece({ x: pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, -1);
 
-const b21 = new SinglePiece({ x: -3 * pieceWidth, y: -pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, true);
-const b22 = new SinglePiece({ x: -pieceWidth, y: -pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, true);
-const b23 = new SinglePiece({ x: pieceWidth, y: -pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, true);
+const b21 = new SinglePiece({ x: -3 * pieceWidth, y: -pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, -1);
+const b22 = new SinglePiece({ x: -pieceWidth, y: -pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, -1);
+const b23 = new SinglePiece({ x: pieceWidth, y: -pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, -1);
 
-const b31 = new SinglePiece({ x: -3 * pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, true);
-const b32 = new SinglePiece({ x: -pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, true);
-const b33 = new SinglePiece({ x: pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, true);
+const b31 = new SinglePiece({ x: -3 * pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, -1);
+const b32 = new SinglePiece({ x: -pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, -1);
+const b33 = new SinglePiece({ x: pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charB, K2, saveLocation, -1);
 //#3 parallel to 1
 const charC = "@"
 const c11 = new SinglePiece({ x: -3 * pieceWidth, y: -3 * pieceHeight, z: 3 * pieceWidth }, pieceWidth, pieceHeight, charC, K2, saveLocation);
@@ -68,17 +68,17 @@ const c32 = new SinglePiece({ x: -pieceWidth, y: pieceHeight, z: 3 * pieceWidth 
 const c33 = new SinglePiece({ x: pieceWidth, y: pieceHeight, z: 3 * pieceWidth }, pieceWidth, pieceHeight, charC, K2, saveLocation);
 //#4 parallel to 2
 const charD = "#";
-const d11 = new SinglePiece({ x: -3 * pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation);
-const d12 = new SinglePiece({ x: -pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation);
-const d13 = new SinglePiece({ x: pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation);
+const d11 = new SinglePiece({ x: -3 * pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation, 1);
+const d12 = new SinglePiece({ x: -pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation, 1);
+const d13 = new SinglePiece({ x: pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation, 1);
 
-const d21 = new SinglePiece({ x: -3 * pieceWidth, y: -pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation);
-const d22 = new SinglePiece({ x: -pieceWidth, y: -pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation);
-const d23 = new SinglePiece({ x: pieceWidth, y: -pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation);
+const d21 = new SinglePiece({ x: -3 * pieceWidth, y: -pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation, 1);
+const d22 = new SinglePiece({ x: -pieceWidth, y: -pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation, 1);
+const d23 = new SinglePiece({ x: pieceWidth, y: -pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation, 1);
 
-const d31 = new SinglePiece({ x: -3 * pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation);
-const d32 = new SinglePiece({ x: -pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation);
-const d33 = new SinglePiece({ x: pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation);
+const d31 = new SinglePiece({ x: -3 * pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation, 1);
+const d32 = new SinglePiece({ x: -pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation, 1);
+const d33 = new SinglePiece({ x: pieceWidth, y: pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charD, K2, saveLocation, 1);
 
 //#5 
 const charE = "*"
@@ -125,17 +125,17 @@ function draw() {
     a32.draw({ x: a, y: b, z: c});
     a33.draw({ x: a, y: b, z: c});
     //#2
-    b11.draw({ x: a, y: b - Math.PI / 2, z: c });
-    b12.draw({ x: a, y: b - Math.PI / 2, z: c });
-    b13.draw({ x: a, y: b - Math.PI / 2, z: c });
+    b11.draw({ x: a, y: b, z: c });
+    b12.draw({ x: a, y: b, z: c });
+    b13.draw({ x: a, y: b, z: c });
 
-    b21.draw({ x: a, y: b - Math.PI / 2, z: c });
-    b22.draw({ x: a, y: b - Math.PI / 2, z: c });
-    b23.draw({ x: a, y: b - Math.PI / 2, z: c });
+    b21.draw({ x: a, y: b, z: c });
+    b22.draw({ x: a, y: b, z: c });
+    b23.draw({ x: a, y: b, z: c });
 
-    b31.draw({ x: a, y: b - Math.PI / 2, z: c });
-    b32.draw({ x: a, y: b - Math.PI / 2, z: c });
-    b33.draw({ x: a, y: b - Math.PI / 2, z: c });
+    b31.draw({ x: a, y: b, z: c });
+    b32.draw({ x: a, y: b, z: c });
+    b33.draw({ x: a, y: b, z: c });
     //#3
     c11.draw({ x: a, y: b, z: c });
     c12.draw({ x: a, y: b, z: c });
@@ -149,17 +149,17 @@ function draw() {
     c32.draw({ x: a, y: b, z: c });
     c33.draw({ x: a, y: b, z: c });
     // #4
-    d11.draw({ x: a, y: b + Math.PI / 2, z: c });
-    d12.draw({ x: a, y: b + Math.PI / 2, z: c });
-    d13.draw({ x: a, y: b + Math.PI / 2, z: c });
+    d11.draw({ x: a, y: b, z: c });
+    d12.draw({ x: a, y: b, z: c });
+    d13.draw({ x: a, y: b, z: c });
 
-    d21.draw({ x: a, y: b + Math.PI / 2, z: c });
-    d22.draw({ x: a, y: b + Math.PI / 2, z: c });
-    d23.draw({ x: a, y: b + Math.PI / 2, z: c });
+    d21.draw({ x: a, y: b, z: c });
+    d22.draw({ x: a, y: b, z: c });
+    d23.draw({ x: a, y: b, z: c });
 
-    d31.draw({ x: a, y: b + Math.PI / 2, z: c });
-    d32.draw({ x: a, y: b + Math.PI / 2, z: c });
-    d33.draw({ x: a, y: b + Math.PI / 2, z: c });
+    d31.draw({ x: a, y: b, z: c });
+    d32.draw({ x: a, y: b, z: c });
+    d33.draw({ x: a, y: b, z: c });
 
     //#5
     e11.draw({ x: a - Math.PI / 2, y: b, z: c });
@@ -217,7 +217,7 @@ document.getElementById("roty").oninput = () => {
 }
 
 document.getElementById("rotl").onclick = () => {
-    b11.rotateZ();
+    b11.rotatePiece();
 }
 
 document.getElementById("rotz").oninput = () => {

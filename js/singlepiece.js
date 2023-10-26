@@ -1,6 +1,6 @@
 export class SinglePiece {
 
-    constructor(position, width, height, char, distanceFromScreen, addToScreen, rotY = false) {
+    constructor(position, width, height, char, distanceFromScreen, addToScreen, rotY) {
         this.width = width;
         this.height = height;
         this.char = char;
@@ -16,15 +16,18 @@ export class SinglePiece {
     }
 
     calcX(x, y, z, a, b, c) {
-        return (z * Math.sin(a) + (x * Math.sin(this.orientation.z) + y * Math.cos(this.orientation.z)) * Math.cos(a)) * Math.sin(c) + ((x * Math.cos(this.orientation.z) - y * Math.sin(this.orientation.z)) * Math.cos(b) - (z * Math.cos(a) - (x * Math.sin(this.orientation.z) + y * Math.cos(this.orientation.z)) * Math.sin(a)) * Math.sin(b)) * Math.cos(c)
+        return (-((x*(Math.sin(this.orientation.x)*Math.sin(this.orientation.z) - Math.sin(this.orientation.y)*Math.cos(this.orientation.x)*Math.cos(this.orientation.z)) + y*(Math.sin(this.orientation.x)*Math.cos(this.orientation.z) + Math.sin(this.orientation.y)*Math.sin(this.orientation.z)*Math.cos(this.orientation.x)) + z*Math.cos(this.orientation.x)*Math.cos(this.orientation.y))*Math.cos(a) - (x*(Math.sin(this.orientation.x)*Math.sin(this.orientation.y)*Math.cos(this.orientation.z) + Math.sin(this.orientation.z)*Math.cos(this.orientation.x)) + y*(-Math.sin(this.orientation.x)*Math.sin(this.orientation.y)*Math.sin(this.orientation.z) + Math.cos(this.orientation.x)*Math.cos(this.orientation.z)) - z*Math.sin(this.orientation.x)*Math.cos(this.orientation.y))*Math.sin(a))*Math.sin(b) + (x*Math.cos(this.orientation.y)*Math.cos(this.orientation.z) - y*Math.sin(this.orientation.z)*Math.cos(this.orientation.y) + z*Math.sin(this.orientation.y))*Math.cos(b))*Math.cos(c) + ((x*(Math.sin(this.orientation.x)*Math.sin(this.orientation.z) - Math.sin(this.orientation.y)*Math.cos(this.orientation.x)*Math.cos(this.orientation.z)) + y*(Math.sin(this.orientation.x)*Math.cos(this.orientation.z) + Math.sin(this.orientation.y)*Math.sin(this.orientation.z)*Math.cos(this.orientation.x)) + z*Math.cos(this.orientation.x)*Math.cos(this.orientation.y))*Math.sin(a) + (x*(Math.sin(this.orientation.x)*Math.sin(this.orientation.y)*Math.cos(this.orientation.z) + Math.sin(this.orientation.z)*Math.cos(this.orientation.x)) + y*(-Math.sin(this.orientation.x)*Math.sin(this.orientation.y)*Math.sin(this.orientation.z) + Math.cos(this.orientation.x)*Math.cos(this.orientation.z)) - z*Math.sin(this.orientation.x)*Math.cos(this.orientation.y))*Math.cos(a))*Math.sin(c);
+        //(z * Math.sin(a) + (x * Math.sin(this.orientation.z) + y * Math.cos(this.orientation.z)) * Math.cos(a)) * Math.sin(c) + ((x * Math.cos(this.orientation.z) - y * Math.sin(this.orientation.z)) * Math.cos(b) - (z * Math.cos(a) - (x * Math.sin(this.orientation.z) + y * Math.cos(this.orientation.z)) * Math.sin(a)) * Math.sin(b)) * Math.cos(c)
     }
 
     calcY(x, y, z, a, b, c) {
-        return (z * Math.sin(a) + (x * Math.sin(this.orientation.z) + y * Math.cos(this.orientation.z)) * Math.cos(a)) * Math.cos(c) - ((x * Math.cos(this.orientation.z) - y * Math.sin(this.orientation.z)) * Math.cos(b) - (z * Math.cos(a) - (x * Math.sin(this.orientation.z) + y * Math.cos(this.orientation.z)) * Math.sin(a)) * Math.sin(b)) * Math.sin(c)
+        return -(-((x*(Math.sin(this.orientation.x)*Math.sin(this.orientation.z) - Math.sin(this.orientation.y)*Math.cos(this.orientation.x)*Math.cos(this.orientation.z)) + y*(Math.sin(this.orientation.x)*Math.cos(this.orientation.z) + Math.sin(this.orientation.y)*Math.sin(this.orientation.z)*Math.cos(this.orientation.x)) + z*Math.cos(this.orientation.x)*Math.cos(this.orientation.y))*Math.cos(a) - (x*(Math.sin(this.orientation.x)*Math.sin(this.orientation.y)*Math.cos(this.orientation.z) + Math.sin(this.orientation.z)*Math.cos(this.orientation.x)) + y*(-Math.sin(this.orientation.x)*Math.sin(this.orientation.y)*Math.sin(this.orientation.z) + Math.cos(this.orientation.x)*Math.cos(this.orientation.z)) - z*Math.sin(this.orientation.x)*Math.cos(this.orientation.y))*Math.sin(a))*Math.sin(b) + (x*Math.cos(this.orientation.y)*Math.cos(this.orientation.z) - y*Math.sin(this.orientation.z)*Math.cos(this.orientation.y) + z*Math.sin(this.orientation.y))*Math.cos(b))*Math.sin(c) + ((x*(Math.sin(this.orientation.x)*Math.sin(this.orientation.z) - Math.sin(this.orientation.y)*Math.cos(this.orientation.x)*Math.cos(this.orientation.z)) + y*(Math.sin(this.orientation.x)*Math.cos(this.orientation.z) + Math.sin(this.orientation.y)*Math.sin(this.orientation.z)*Math.cos(this.orientation.x)) + z*Math.cos(this.orientation.x)*Math.cos(this.orientation.y))*Math.sin(a) + (x*(Math.sin(this.orientation.x)*Math.sin(this.orientation.y)*Math.cos(this.orientation.z) + Math.sin(this.orientation.z)*Math.cos(this.orientation.x)) + y*(-Math.sin(this.orientation.x)*Math.sin(this.orientation.y)*Math.sin(this.orientation.z) + Math.cos(this.orientation.x)*Math.cos(this.orientation.z)) - z*Math.sin(this.orientation.x)*Math.cos(this.orientation.y))*Math.cos(a))*Math.cos(c);
+        //(z * Math.sin(a) + (x * Math.sin(this.orientation.z) + y * Math.cos(this.orientation.z)) * Math.cos(a)) * Math.cos(c) - ((x * Math.cos(this.orientation.z) - y * Math.sin(this.orientation.z)) * Math.cos(b) - (z * Math.cos(a) - (x * Math.sin(this.orientation.z) + y * Math.cos(this.orientation.z)) * Math.sin(a)) * Math.sin(b)) * Math.sin(c)
     }
 
     calcZ(x, y, z, a, b, c) {
-        return (x * Math.cos(this.orientation.z) - y * Math.sin(this.orientation.z)) * Math.sin(b) + (z * Math.cos(a) - (x * Math.sin(this.orientation.z) + y * Math.cos(this.orientation.z)) * Math.sin(a)) * Math.cos(b)
+        return ((x*(Math.sin(this.orientation.x)*Math.sin(this.orientation.z) - Math.sin(this.orientation.y)*Math.cos(this.orientation.x)*Math.cos(this.orientation.z)) + y*(Math.sin(this.orientation.x)*Math.cos(this.orientation.z) + Math.sin(this.orientation.y)*Math.sin(this.orientation.z)*Math.cos(this.orientation.x)) + z*Math.cos(this.orientation.x)*Math.cos(this.orientation.y))*Math.cos(a) - (x*(Math.sin(this.orientation.x)*Math.sin(this.orientation.y)*Math.cos(this.orientation.z) + Math.sin(this.orientation.z)*Math.cos(this.orientation.x)) + y*(-Math.sin(this.orientation.x)*Math.sin(this.orientation.y)*Math.sin(this.orientation.z) + Math.cos(this.orientation.x)*Math.cos(this.orientation.z)) - z*Math.sin(this.orientation.x)*Math.cos(this.orientation.y))*Math.sin(a))*Math.cos(b) + (x*Math.cos(this.orientation.y)*Math.cos(this.orientation.z) - y*Math.sin(this.orientation.z)*Math.cos(this.orientation.y) + z*Math.sin(this.orientation.y))*Math.sin(b);
+        //(x * Math.cos(this.orientation.z) - y * Math.sin(this.orientation.z)) * Math.sin(b) + (z * Math.cos(a) - (x * Math.sin(this.orientation.z) + y * Math.cos(this.orientation.z)) * Math.sin(a)) * Math.cos(b)
     }
 
     calcWall(cx, cy, cz, rotX, rotY, rotZ, tbFrame = false, lrFrame = false) {
@@ -48,6 +51,11 @@ export class SinglePiece {
                 let a = cubeWidth;
                 let b = cubeHeight;
                 let c = this.position.z;
+                if (this.rotY) {
+                    a = this.position.z * this.rotY;
+                    b = cubeWidth;
+                    c = cubeHeight
+                }
                 if (parseInt(Math.floor(cubeHeight)) == parseInt(this.position.y + (2 * this.height)) - 1 || cubeHeight == this.position.y) {
                     this.calcWall(a, b, c, rotation.x, rotation.y, rotation.z, true, false);
                 } else if (parseInt(Math.floor(cubeWidth)) == parseInt(this.position.x + (2 * this.width)) - 1 || cubeWidth == this.position.x) {
@@ -59,7 +67,11 @@ export class SinglePiece {
         }
     }
 
-    rotateZ() {
-        this.orientation.z += Math.PI / 3;
+    rotatePiece() {
+        if(this.rotY){
+            this.orientation.x += Math.PI / 3;
+        } else {
+            this.orientation.z += Math.PI / 3;
+        }
     }
 }
