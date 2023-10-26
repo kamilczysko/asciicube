@@ -15,7 +15,7 @@
 </head>
 <body style="display: flex;">
     <!-- <p name="" id="canvas" style="font-size: 8px; font-family: monospace; text-align: center; width: 100%;"></p> -->
-    <textarea name="" id="canvas" cols="200" rows="200" style="font-size: 12px; font-family: monospace; text-align: center; background: black; color: rgb(146, 146, 205);" readonly></textarea>
+    <textarea name="" id="canvas" cols="150" rows="150" style="font-size: 12px; font-family: monospace; text-align: center; background: black; color: rgb(146, 146, 205);" readonly></textarea>
     <!-- <script src="cube.js"></script> -->
     <div style="font-family: Arial, Helvetica, sans-serif; width: 100%;">
         <div style="display: flex; flex-direction: column; align-items: center;">
@@ -29,6 +29,11 @@
         <div style="display: flex; flex-direction: column; align-items: center;">
             <P>Z rotation</P>
             <input type="range" min="-628" max="628" value="0" class="slider" id="rotz" style="width:95%">
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <P>rotate layer</P>
+            <button id="rotl"> rotL </button>
         </div>
     </div>
     <script type="module" src="./js/renderer.js"></script>
