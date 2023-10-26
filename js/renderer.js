@@ -1,5 +1,6 @@
 import { SinglePiece } from "./singlepiece.js";
 
+//settings
 const width = 150;
 const height = 150;
 const screenSize = (width) * height;
@@ -17,16 +18,18 @@ const K1 = width * K2 * 3 / (8 * (pieceWidth * pieceHeight));
 let output = Array(screenSize).fill(" ")
 let zBuffer = Array(screenSize).fill(0)
 
-function getScreenMap(ooz, char, x, y) {
+//map of visible pixels
+const saveLocation = (ooz, char, x, y) => {
     const xp = parseInt((width / 4) + (K1 * ooz * x));
-    const yp = parseInt((height / 5) + (K1 * ooz * y));
+    const yp = parseInt((height / 5.75) + (K1 * ooz * y));
     const index = parseInt(yp * width + xp)
     if (zBuffer[index] < ooz) {
         zBuffer[index] = ooz;
         output[index] = char;
     }
 }
-const saveLocation = (ooz, char, x, y) => { getScreenMap(ooz, char, x, y) };
+
+//create cube
 //#1
 const charA = "&"
 const a11 = new SinglePiece({ x: -3 * pieceWidth, y: -3 * pieceHeight, z: -3 * pieceWidth }, pieceWidth, pieceHeight, charA, K2, saveLocation);
@@ -112,6 +115,7 @@ const f33 = new SinglePiece({ x: pieceWidth, y: pieceHeight, z: -3 * pieceWidth 
 function draw() {
     output = Array(screenSize).fill(" ")
     zBuffer = Array(screenSize).fill(0)
+
     //#1
     a11.draw({ x: a, y: b, z: c});
     a12.draw({ x: a, y: b, z: c});
@@ -188,9 +192,6 @@ function draw() {
     f32.draw({ x: a + Math.PI / 2, y: b, z: c });
     f33.draw({ x: a + Math.PI / 2, y: b, z: c });
 
-
-
-
     let res = ""
     for (let au = 0; au < screenSize; au++) {
         res = res + output[au];
@@ -203,9 +204,10 @@ function draw() {
 }
 
 document.getElementById("canvas").onclick = (event) => {
-    const canvasStart = 15//1673;
+    const canvasStart = 0//1673;
     const start = document.getElementById("canvas").selectionStart;
     const itemInArray = start - canvasStart;
+    console.log(itemInArray)
 }
 
 document.getElementById("rotx").oninput = () => {
@@ -216,9 +218,30 @@ document.getElementById("roty").oninput = () => {
     b = document.getElementById("roty").value / 100
 }
 
-document.getElementById("rotl").onclick = () => {
+document.getElementById("rotl1").onclick = () => {
     b11.rotatePiece();
 }
+
+document.getElementById("rotl2").onclick = () => {
+    a11.rotatePiece();
+}
+
+
+document.getElementById("rotl3").onclick = () => {
+    a22.rotatePiece();
+}
+
+
+document.getElementById("rotl4").onclick = () => {
+    f12.rotatePiece();
+}
+
+
+document.getElementById("rotl5").onclick = () => {
+    b22.rotatePiece();
+}
+
+
 
 document.getElementById("rotz").oninput = () => {
     c = document.getElementById("rotz").value / 100
