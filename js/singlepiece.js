@@ -44,7 +44,7 @@ export class SinglePiece {
 
 
     draw(rotation) {
-        for (let a = this.position.x; a < this.position.x + (2 * this.width); a += this.step) {
+        for (let a = this.position.x; a <= this.position.x + (2 * this.width); a += this.step) {
             for (let b = this.position.y; b <= this.position.y + (2 * this.height); b += this.step) {
                 for (let c = this.position.z; c <= this.position.z + (2 * this.height); c += this.step) {
                     if (this.left && a == this.position.x) {
@@ -58,7 +58,7 @@ export class SinglePiece {
                     } else if (this.bottom && b == this.position.y + (2 * this.height)) {
                         this.calcWall(a, b, c, rotation.x, rotation.y, rotation.z, "B");//bottom
                     }
-                    else if(this.right){ //right
+                    else if(this.right && a == this.position.x + (2 * this.width)){ //right
                         this.calcWall(a, b, c, rotation.x, rotation.y, rotation.z, "O");
                     }
                 }
