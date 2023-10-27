@@ -18,7 +18,7 @@ export class SinglePiece {
         this.back = visibleWalls.back
 
         this.actualZRot = 0.0;
-        this.step = 1;
+        this.step = .7;
         this.offset = 1;
     }
 
