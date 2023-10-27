@@ -18,7 +18,7 @@ export class SinglePiece {
         this.back = visibleWalls.back
 
         this.actualZRot = 0.0;
-        this.step = .5;
+        this.step = 1;
         this.offset = 1;
     }
 
@@ -44,23 +44,80 @@ export class SinglePiece {
 
 
     draw(rotation) {
-        for (let a = this.position.x; a <= this.position.x + (2 * this.width); a += this.step) {
+        if (this.left) {
             for (let b = this.position.y; b <= this.position.y + (2 * this.height); b += this.step) {
                 for (let c = this.position.z; c <= this.position.z + (2 * this.height); c += this.step) {
-                    if (this.left && a == this.position.x) {
-                        this.calcWall(a, b, c, rotation.x, rotation.y, rotation.z, "*");//left
-                    } else if (this.front && c == this.position.z) {
-                        this.calcWall(a, b, c, rotation.x, rotation.y, rotation.z, "#");//front
-                    } else if (this.back && c == this.position.z + (2 * this.height)) {
-                        this.calcWall(a, b, c, rotation.x, rotation.y, rotation.z, "M");//back
-                    } else if (this.top && b == this.position.y) {
-                        this.calcWall(a, b, c, rotation.x, rotation.y, rotation.z, "P");//top
-                    } else if (this.bottom && b == this.position.y + (2 * this.height)) {
-                        this.calcWall(a, b, c, rotation.x, rotation.y, rotation.z, "B");//bottom
+                    let char = "+"
+                    if ((b == this.position.y || parseInt(Math.floor(b)) == parseInt(this.position.y + (2 * this.width)-1)) ||
+                        (parseInt(Math.floor(c)) == parseInt(this.position.z + (2 * this.height))-1)) {
+                        char = " "
                     }
-                    else if(this.right && a == this.position.x + (2 * this.width)){ //right
-                        this.calcWall(a, b, c, rotation.x, rotation.y, rotation.z, "O");
+                    this.calcWall(this.position.x, b, c, rotation.x, rotation.y, rotation.z, char);
+                }
+            }
+        }
+        if (this.right) {
+            for (let b = this.position.y; b <= this.position.y + (2 * this.height); b += this.step) {
+                for (let c = this.position.z; c <= this.position.z + (2 * this.height); c += this.step) {
+                    let char = "*"
+                    if ((c == this.position.z || parseInt(Math.floor(c)) == parseInt(this.position.z + (2 * this.width)-1)) ||
+                        (parseInt(Math.floor(b)) == parseInt(this.position.y + (2 * this.height))-1)) {
+                        char = " "
                     }
+                    this.calcWall(this.position.x + (2 * this.height), b, c, rotation.x, rotation.y, rotation.z, char);
+                }
+            }
+        }
+
+        if (this.top) {
+            for (let a = this.position.x; a <= this.position.x + (2 * this.width); a += this.step) {
+                for (let c = this.position.z; c <= this.position.z + (2 * this.height); c += this.step) {
+                    let char = "^"
+                    if ((a == this.position.x || parseInt(Math.floor(a)) == parseInt(this.position.x + (2 * this.width)-1)) ||
+                        (parseInt(Math.floor(c)) == parseInt(this.position.z + (2 * this.height))-1)) {
+                        char = " "
+                    }
+                    this.calcWall(a, this.position.y, c, rotation.x, rotation.y, rotation.z, char);
+                }
+            }
+        }
+
+        if (this.bottom) {
+            for (let a = this.position.x; a <= this.position.x + (2 * this.width); a += this.step) {
+                for (let c = this.position.z; c <= this.position.z + (2 * this.height); c += this.step) {
+                    let char = "@"
+                    if ((a == this.position.x || parseInt(Math.floor(a)) == parseInt(this.position.x + (2 * this.width)-1)) ||
+                        (c == parseInt(this.position.z + (2 * this.height)-1))) {
+                        char = " "
+                    }
+                    this.calcWall(a, this.position.y + (2 * this.height), c, rotation.x, rotation.y, rotation.z, char);
+                }
+            }
+        }
+
+        if (this.front) {
+            for (let a = this.position.x; a <= this.position.x + (2 * this.width); a += this.step) {
+                for (let b = this.position.y; b <= this.position.y + (2 * this.height); b += this.step) {
+                    let char = "#"
+                    if ((a == this.position.x || parseInt(Math.floor(a)) == parseInt(this.position.x + (2 * this.width)-1)) ||
+                        (b == this.position.y || parseInt(Math.floor(b)) == parseInt(this.position.y + (2 * this.height)-1))) {
+                            console.log(a + " - " + parseInt(this.position.x + (2 * this.height)-1));
+                        char = " "
+                    }
+                    this.calcWall(a, b, this.position.z, rotation.x, rotation.y, rotation.z, char);
+                }
+            }
+        }
+
+        if (this.back) {
+            for (let a = this.position.x; a <= this.position.x + (2 * this.width); a += this.step) {
+                for (let b = this.position.y; b <= this.position.y + (2 * this.height); b += this.step) {
+                    let char = "?"
+                    if ((a == this.position.x || parseInt(Math.floor(a)) == parseInt(this.position.x + (2 * this.width)-1)) ||
+                        (b == this.position.y || parseInt(Math.floor(b)) == parseInt(this.position.y + (2 * this.height)-1))) {
+                        char = " "
+                    }
+                    this.calcWall(a, b, this.position.z + (2 * this.height), rotation.x, rotation.y, rotation.z, char);
                 }
             }
         }

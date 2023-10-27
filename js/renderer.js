@@ -11,7 +11,7 @@ let c = 0;
 
 const pieceWidth = 8;
 
-const offset = 5;
+const offset = 0;
 
 let K2 = 450;
 const K1 = width * K2 * 3 / (8 * (pieceWidth ** 2));
@@ -83,7 +83,7 @@ function draw() {
     a31.draw({ x: a, y: b, z: c });
     a32.draw({ x: a, y: b, z: c });
     a33.draw({ x: a, y: b, z: c });
-    //#2
+    // #2
     b11.draw({ x: a, y: b, z: c });
     b12.draw({ x: a, y: b, z: c });
     b13.draw({ x: a, y: b, z: c });
@@ -94,7 +94,7 @@ function draw() {
     b31.draw({ x: a, y: b, z: c });
     b32.draw({ x: a, y: b, z: c });
     b33.draw({ x: a, y: b, z: c });
-    // // //#3
+    // // // //#3
     c11.draw({ x: a, y: b, z: c });
     c12.draw({ x: a, y: b, z: c });
     c13.draw({ x: a, y: b, z: c });
@@ -150,4 +150,4 @@ document.getElementById("rot").onclick = () => {
 
 setInterval(() => {
     draw();
-}, 400);
+}, 50);
