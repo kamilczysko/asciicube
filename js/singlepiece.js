@@ -101,7 +101,6 @@ export class SinglePiece {
                     let char = "#"
                     if ((a == this.position.x || parseInt(Math.floor(a)) == parseInt(this.position.x + (2 * this.width)-1)) ||
                         (b == this.position.y || parseInt(Math.floor(b)) == parseInt(this.position.y + (2 * this.height)-1))) {
-                            console.log(a + " - " + parseInt(this.position.x + (2 * this.height)-1));
                         char = " "
                     }
                     this.calcWall(a, b, this.position.z, rotation.x, rotation.y, rotation.z, char);
