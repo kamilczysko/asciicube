@@ -1,6 +1,6 @@
 export class SinglePiece {
 
-    constructor(position, data, visibleWalls) {
+    constructor(id, position, data, visibleWalls) {
         this.width = data.width;
         this.height = data.width;
         this.distanceFromScreen = data.distance;
@@ -8,6 +8,8 @@ export class SinglePiece {
         this.addToScreen = data.save;
         this.position = { x: position.x, y: position.y, z: position.z }
         this.orientation = { x: 0, y: 0, z: 0 }
+        this.id = id;
+        this.rotation = {x:0,y:0,z:0}
 
         //visible walls
         this.top = visibleWalls.top;
@@ -20,6 +22,10 @@ export class SinglePiece {
         this.actualZRot = 0.0;
         this.step = .3;
         this.offset = 1;
+    }
+
+    getId() {
+        return this.id;
     }
 
     calcX(x, y, z, a, b, c) {
@@ -39,11 +45,12 @@ export class SinglePiece {
         const y = this.calcY(cx, cy, cz, rotX, rotY, rotZ)
         const z = this.distanceFromScreen + this.calcZ(cx, cy, cz, rotX, rotY, rotZ)
         const ooz = 1 / z;
-        this.addToScreen(ooz, char, x, y);
+        this.addToScreen(ooz, char, x, y, () => {});
     }
 
 
     draw(rotation) {
+        this.rotation = rotation;
         if (this.left) {
             for (let b = this.position.y; b <= this.position.y + (2 * this.height); b += this.step) {
                 for (let c = this.position.z; c <= this.position.z + (2 * this.height); c += this.step) {
@@ -122,16 +129,41 @@ export class SinglePiece {
         }
     }
 
-    rotatePiece(axis = "z") {
+    rotatePiece(axis = "z", direction = 1) {
         switch (axis) {
             case "z":
-                this.orientation.z += Math.PI / 2;
+                const zInterval = setInterval(() => {
+                    
+                    this.orientation.z += Math.PI / 10*direction;
+                    if(this.orientation.z % (Math.PI /2) == 0) {
+                        if(this.orientation.z == 2*Math.PI) {
+                            this.orientation.z = 0
+                        }
+                        clearInterval(zInterval);
+                    }
+                }, 100)
                 break;
             case "x":
-                this.orientation.x += Math.PI / 2;
+                const xInterval = setInterval(() => {
+                    this.orientation.x += Math.PI / 10 *direction;
+                    if(this.orientation.x % (Math.PI /2) == 0) {
+                        if(this.orientation.x == 2*Math.PI) {
+                            this.orientation.x = 0
+                        }
+                        clearInterval(xInterval);
+                    }
+                }, 100)
                 break;
             case "y":
-                this.orientation.y += Math.PI / 2;
+                const yInterval = setInterval(() => {
+                    this.orientation.y += Math.PI / 10*direction;
+                    if(this.orientation.y % (Math.PI /2) == 0) {
+                        if(this.orientation.y == 2*Math.PI) {
+                            this.orientation.y = 0
+                        }
+                        clearInterval(yInterval);
+                    }
+                }, 100)
                 break;
         }
     }
