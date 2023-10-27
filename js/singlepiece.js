@@ -18,7 +18,7 @@ export class SinglePiece {
         this.back = visibleWalls.back
 
         this.actualZRot = 0.0;
-        this.step = .7;
+        this.step = .3;
         this.offset = 1;
     }
 
@@ -87,7 +87,7 @@ export class SinglePiece {
                 for (let c = this.position.z; c <= this.position.z + (2 * this.height); c += this.step) {
                     let char = "@"
                     if ((a == this.position.x || parseInt(Math.floor(a)) == parseInt(this.position.x + (2 * this.width)-1)) ||
-                        (c == parseInt(this.position.z + (2 * this.height)-1))) {
+                        (parseInt(Math.floor(c)) == parseInt(this.position.z + (2 * this.height))-1)) {
                         char = " "
                     }
                     this.calcWall(a, this.position.y + (2 * this.height), c, rotation.x, rotation.y, rotation.z, char);
