@@ -15,14 +15,12 @@ export class Cube {
             }
         }
         this.recalculateForX(recalculation, layer, direction);
-        console.log(this.cube)
     }
 
     recalculateForX(arr, layer, dir) {
         for (let c = 1; c <= arr.length; c++) {
             if (c == 5) { continue; }
-            console.log(arr[c - 1].i,arr[c - 1].j, layer)
-            if(dir == 1) {
+            if(dir == -1) {
                 this.cube[arr[c - 1].i][arr[c - 1].j][layer] = arr[((c * 3) % 10) - 1].element;
             } else {
                 this.cube[arr[c - 1].i][arr[c - 1].j][layer] = arr[((c * 7) % 10) - 1].element;
@@ -46,11 +44,10 @@ export class Cube {
 
     recalculateForY(arr, layer, dir=1) {
         for (let c = 1; c <= arr.length; c++) {
-            console.log(arr[c - 1].i, arr[c - 1].j, layer)
             if(c==5) {
                 continue;
             }
-            if(dir == 1) {
+            if(dir == -1) {
                 this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
             } else {
                 this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 7) % 10) - 1].element;
@@ -74,7 +71,10 @@ export class Cube {
     recalculateForZ(arr, layer, dir=1) {
         for (let c = 1; c <= arr.length; c++) {
             if (this.cube[layer][arr[c - 1].i][arr[c - 1].j]) {
-                if(dir == 1){
+                if(c == 5) {
+                    continue;
+                }
+                if(dir == -1){
                     this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
                 } else {
                     this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
