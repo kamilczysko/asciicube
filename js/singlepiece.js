@@ -52,15 +52,15 @@ export class SinglePiece {
                 return { axis: "x", direction: xz };
             } else if (yz != 0) {
                 return { axis: "y", direction: yz };
-            } else { 
+            } else if (zz != 0) {
                 return { axis: "z", direction: zz };
             }
         } else if (axis == "y") {
             if (xy != 0) {
                 return { axis: "x", direction: xy };
-            } else if (yz != 0) {
+            } else if (zy != 0) {
                 return { axis: "z", direction: zy };
-            } else { 
+            } else if (yy != 0) {
                 return { axis: "y", direction: yy };
             }
         } else if (axis == "x") {
@@ -68,7 +68,7 @@ export class SinglePiece {
                 return { axis: "y", direction: yx };
             } else if (zx != 0) {
                 return { axis: "z", direction: zx };
-            } else { 
+            } else if (xx != 0) {
                 return { axis: "x", direction: xx };
             }
         }
