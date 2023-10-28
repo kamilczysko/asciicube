@@ -32,8 +32,8 @@ export class Cube {
         const recalculation = [];
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                const element = this.cube[i][layer][j];
-                recalculation.push({ i: i, j: j, element: element });
+                const element = this.cube[j][layer][i];
+                recalculation.push({ i: j, j: i, element: element });
                 if (element) {
                     element.rotatePiece("y", direction);
                 }
@@ -59,8 +59,8 @@ export class Cube {
         const recalculation = [];
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                const element = this.cube[layer][i][j];
-                recalculation.push({ i: i, j: j, element: element });
+                const element = this.cube[layer][j][i];
+                recalculation.push({ i: j, j: i, element: element });
                 if (element) {
                     element.rotatePiece("z", direction);
                 }
