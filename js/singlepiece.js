@@ -4,12 +4,12 @@ export class SinglePiece {
         this.width = data.width;
         this.height = data.width;
         this.distanceFromScreen = data.distance;
-        this.position = position;
+
         this.addToScreen = data.save;
+
         this.position = { x: position.x, y: position.y, z: position.z }
-        this.orientation = { x: 0.0, y: 0.0, z: 0.0 }
-        this.id = id;
-        this.rotation = { x: 0, y: 0, z: 0 }
+
+        this.axisRotations = { x: 0.0, y: 0.0, z: 0.0 }
 
         //visible walls
         this.top = visibleWalls.top;
@@ -19,22 +19,15 @@ export class SinglePiece {
         this.front = visibleWalls.front
         this.back = visibleWalls.back
 
-        this.actualZRot = 0.0;
         this.step = .3;
-        this.offset = 1;
         this.isRotating = false;
-        // this.getOrientation(this.orientation.x, this.orientation.y, this.orientation.z)
 
-    }
-
-    getId() {
-        return this.id;
     }
 
     getOrientation(axis) {
-        const a = this.orientation.x
-        const b = this.orientation.y
-        const c = this.orientation.z
+        const a = this.axisRotations.x
+        const b = this.axisRotations.y
+        const c = this.axisRotations.z
 
         const xx = parseInt(Math.round(Math.cos(b) * Math.cos(c)))
         const yx = parseInt(Math.round(- Math.sin(c) * Math.cos(b)))
@@ -75,15 +68,15 @@ export class SinglePiece {
     }
 
     calcX(x, y, z, a, b, c) {
-        return (-((x * (Math.sin(this.orientation.x) * Math.sin(this.orientation.z) - Math.sin(this.orientation.y) * Math.cos(this.orientation.x) * Math.cos(this.orientation.z)) + y * (Math.sin(this.orientation.x) * Math.cos(this.orientation.z) + Math.sin(this.orientation.y) * Math.sin(this.orientation.z) * Math.cos(this.orientation.x)) + z * Math.cos(this.orientation.x) * Math.cos(this.orientation.y)) * Math.cos(a) - (x * (Math.sin(this.orientation.x) * Math.sin(this.orientation.y) * Math.cos(this.orientation.z) + Math.sin(this.orientation.z) * Math.cos(this.orientation.x)) + y * (-Math.sin(this.orientation.x) * Math.sin(this.orientation.y) * Math.sin(this.orientation.z) + Math.cos(this.orientation.x) * Math.cos(this.orientation.z)) - z * Math.sin(this.orientation.x) * Math.cos(this.orientation.y)) * Math.sin(a)) * Math.sin(b) + (x * Math.cos(this.orientation.y) * Math.cos(this.orientation.z) - y * Math.sin(this.orientation.z) * Math.cos(this.orientation.y) + z * Math.sin(this.orientation.y)) * Math.cos(b)) * Math.cos(c) + ((x * (Math.sin(this.orientation.x) * Math.sin(this.orientation.z) - Math.sin(this.orientation.y) * Math.cos(this.orientation.x) * Math.cos(this.orientation.z)) + y * (Math.sin(this.orientation.x) * Math.cos(this.orientation.z) + Math.sin(this.orientation.y) * Math.sin(this.orientation.z) * Math.cos(this.orientation.x)) + z * Math.cos(this.orientation.x) * Math.cos(this.orientation.y)) * Math.sin(a) + (x * (Math.sin(this.orientation.x) * Math.sin(this.orientation.y) * Math.cos(this.orientation.z) + Math.sin(this.orientation.z) * Math.cos(this.orientation.x)) + y * (-Math.sin(this.orientation.x) * Math.sin(this.orientation.y) * Math.sin(this.orientation.z) + Math.cos(this.orientation.x) * Math.cos(this.orientation.z)) - z * Math.sin(this.orientation.x) * Math.cos(this.orientation.y)) * Math.cos(a)) * Math.sin(c);
+        return (-((x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.z) - Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) + y * (Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + z * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.cos(a) - (x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + y * (-Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) + Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) - z * Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.sin(a)) * Math.sin(b) + (x * Math.cos(this.axisRotations.y) * Math.cos(this.axisRotations.z) - y * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.y) + z * Math.sin(this.axisRotations.y)) * Math.cos(b)) * Math.cos(c) + ((x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.z) - Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) + y * (Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + z * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.sin(a) + (x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + y * (-Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) + Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) - z * Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.cos(a)) * Math.sin(c);
     }
 
     calcY(x, y, z, a, b, c) {
-        return -(-((x * (Math.sin(this.orientation.x) * Math.sin(this.orientation.z) - Math.sin(this.orientation.y) * Math.cos(this.orientation.x) * Math.cos(this.orientation.z)) + y * (Math.sin(this.orientation.x) * Math.cos(this.orientation.z) + Math.sin(this.orientation.y) * Math.sin(this.orientation.z) * Math.cos(this.orientation.x)) + z * Math.cos(this.orientation.x) * Math.cos(this.orientation.y)) * Math.cos(a) - (x * (Math.sin(this.orientation.x) * Math.sin(this.orientation.y) * Math.cos(this.orientation.z) + Math.sin(this.orientation.z) * Math.cos(this.orientation.x)) + y * (-Math.sin(this.orientation.x) * Math.sin(this.orientation.y) * Math.sin(this.orientation.z) + Math.cos(this.orientation.x) * Math.cos(this.orientation.z)) - z * Math.sin(this.orientation.x) * Math.cos(this.orientation.y)) * Math.sin(a)) * Math.sin(b) + (x * Math.cos(this.orientation.y) * Math.cos(this.orientation.z) - y * Math.sin(this.orientation.z) * Math.cos(this.orientation.y) + z * Math.sin(this.orientation.y)) * Math.cos(b)) * Math.sin(c) + ((x * (Math.sin(this.orientation.x) * Math.sin(this.orientation.z) - Math.sin(this.orientation.y) * Math.cos(this.orientation.x) * Math.cos(this.orientation.z)) + y * (Math.sin(this.orientation.x) * Math.cos(this.orientation.z) + Math.sin(this.orientation.y) * Math.sin(this.orientation.z) * Math.cos(this.orientation.x)) + z * Math.cos(this.orientation.x) * Math.cos(this.orientation.y)) * Math.sin(a) + (x * (Math.sin(this.orientation.x) * Math.sin(this.orientation.y) * Math.cos(this.orientation.z) + Math.sin(this.orientation.z) * Math.cos(this.orientation.x)) + y * (-Math.sin(this.orientation.x) * Math.sin(this.orientation.y) * Math.sin(this.orientation.z) + Math.cos(this.orientation.x) * Math.cos(this.orientation.z)) - z * Math.sin(this.orientation.x) * Math.cos(this.orientation.y)) * Math.cos(a)) * Math.cos(c);
+        return -(-((x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.z) - Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) + y * (Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + z * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.cos(a) - (x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + y * (-Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) + Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) - z * Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.sin(a)) * Math.sin(b) + (x * Math.cos(this.axisRotations.y) * Math.cos(this.axisRotations.z) - y * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.y) + z * Math.sin(this.axisRotations.y)) * Math.cos(b)) * Math.sin(c) + ((x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.z) - Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) + y * (Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + z * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.sin(a) + (x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + y * (-Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) + Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) - z * Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.cos(a)) * Math.cos(c);
     }
 
     calcZ(x, y, z, a, b, c) {
-        return ((x * (Math.sin(this.orientation.x) * Math.sin(this.orientation.z) - Math.sin(this.orientation.y) * Math.cos(this.orientation.x) * Math.cos(this.orientation.z)) + y * (Math.sin(this.orientation.x) * Math.cos(this.orientation.z) + Math.sin(this.orientation.y) * Math.sin(this.orientation.z) * Math.cos(this.orientation.x)) + z * Math.cos(this.orientation.x) * Math.cos(this.orientation.y)) * Math.cos(a) - (x * (Math.sin(this.orientation.x) * Math.sin(this.orientation.y) * Math.cos(this.orientation.z) + Math.sin(this.orientation.z) * Math.cos(this.orientation.x)) + y * (-Math.sin(this.orientation.x) * Math.sin(this.orientation.y) * Math.sin(this.orientation.z) + Math.cos(this.orientation.x) * Math.cos(this.orientation.z)) - z * Math.sin(this.orientation.x) * Math.cos(this.orientation.y)) * Math.sin(a)) * Math.cos(b) + (x * Math.cos(this.orientation.y) * Math.cos(this.orientation.z) - y * Math.sin(this.orientation.z) * Math.cos(this.orientation.y) + z * Math.sin(this.orientation.y)) * Math.sin(b);
+        return ((x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.z) - Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) + y * (Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + z * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.cos(a) - (x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + y * (-Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) + Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) - z * Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.sin(a)) * Math.cos(b) + (x * Math.cos(this.axisRotations.y) * Math.cos(this.axisRotations.z) - y * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.y) + z * Math.sin(this.axisRotations.y)) * Math.sin(b);
     }
 
     calcWall(cx, cy, cz, rotX, rotY, rotZ, char) {
@@ -95,7 +88,6 @@ export class SinglePiece {
     }
 
     draw(rotation) {
-        this.rotation = rotation;
         if (this.left) {
             for (let b = this.position.y; b <= this.position.y + (2 * this.height); b += this.step) {
                 for (let c = this.position.z; c <= this.position.z + (2 * this.height); c += this.step) {
@@ -180,9 +172,9 @@ export class SinglePiece {
         switch (rotation.axis) {
             case "z":
                 const zInterval = await setInterval(() => {
-                    this.orientation.z += Math.PI / 10 * rotation.direction;
-                    if (this.orientation.z % (Math.PI / 2) == 0) {
-                        if (this.orientation.z == 2 * Math.PI) {
+                    this.axisRotations.z += Math.PI / 10 * rotation.direction;
+                    if (this.axisRotations.z % (Math.PI / 2) == 0) {
+                        if (this.axisRotations.z == 2 * Math.PI) {
                             // this.orientation.z = 0
                         }
                         this.isRotating = false;
@@ -192,9 +184,9 @@ export class SinglePiece {
                 break;
             case "x":
                 const xInterval = await setInterval(() => {
-                    this.orientation.x += Math.PI / 10 * rotation.direction;
-                    if (this.orientation.x % (Math.PI / 2) == 0) {
-                        if (this.orientation.x == 2 * Math.PI) {
+                    this.axisRotations.x += Math.PI / 10 * rotation.direction;
+                    if (this.axisRotations.x % (Math.PI / 2) == 0) {
+                        if (this.axisRotations.x == 2 * Math.PI) {
                             // this.orientation.x = 0
                         }
                         this.isRotating = false;
@@ -204,9 +196,9 @@ export class SinglePiece {
                 break;
             case "y":
                 const yInterval = await setInterval(() => {
-                    this.orientation.y += Math.PI / 10 * rotation.direction;
-                    if (this.orientation.y % (Math.PI / 2) == 0) {
-                        if (this.orientation.y == Math.PI) {
+                    this.axisRotations.y += Math.PI / 10 * rotation.direction;
+                    if (this.axisRotations.y % (Math.PI / 2) == 0) {
+                        if (this.axisRotations.y == Math.PI) {
                             // this.orientation.y = 0
                         }
                         this.isRotating = false;

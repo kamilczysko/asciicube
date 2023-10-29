@@ -4,7 +4,7 @@ export class Cube {
         this.offset = 0;
         this.pieceWidth = persistData.width;
         this.persistData = persistData;
-        
+
         //init cube
         this.a11 = null;
         this.a12 = null;
@@ -89,120 +89,95 @@ export class Cube {
     }
 
     draw(a, b, c) {
-        //#1
-        this.a11.draw({ x: a, y: b, z: c });
-        this.a12.draw({ x: a, y: b, z: c });
-        this.a13.draw({ x: a, y: b, z: c });
-
-        this.a21.draw({ x: a, y: b, z: c });
-        this.a22.draw({ x: a, y: b, z: c });
-        this.a23.draw({ x: a, y: b, z: c });
-
-        this.a31.draw({ x: a, y: b, z: c });
-        this.a32.draw({ x: a, y: b, z: c });
-        this.a33.draw({ x: a, y: b, z: c });
-        // #2
-        this.b11.draw({ x: a, y: b, z: c });
-        this.b12.draw({ x: a, y: b, z: c });
-        this.b13.draw({ x: a, y: b, z: c });
-
-        this.b21.draw({ x: a, y: b, z: c });
-        this.b23.draw({ x: a, y: b, z: c });
-
-        this.b31.draw({ x: a, y: b, z: c });
-        this.b32.draw({ x: a, y: b, z: c });
-        this.b33.draw({ x: a, y: b, z: c });
-        // // // //#3
-        this.c11.draw({ x: a, y: b, z: c });
-        this.c12.draw({ x: a, y: b, z: c });
-        this.c13.draw({ x: a, y: b, z: c });
-
-        this.c21.draw({ x: a, y: b, z: c });
-        this.c22.draw({ x: a, y: b, z: c });
-        this.c23.draw({ x: a, y: b, z: c });
-
-        this.c31.draw({ x: a, y: b, z: c });
-        this.c32.draw({ x: a, y: b, z: c });
-        this.c33.draw({ x: a, y: b, z: c });
-    }
-
-    rotateX(layer, direction = 1) {
-        const recalculation = []
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                const element = this.cube[i][j][layer];
-                recalculation.push({ i: i, j: j, element: element });
-                if (element) {
-                    element.rotatePiece("x", direction);
+                for (let k = 0; k < 3; k++) {
+                    const cube = this.cube[i][j][k];
+                    if (cube) {
+                        cube.draw({ x: a, y: b, z: c });
+                    }
                 }
             }
         }
-        this.recalculateForX(recalculation, layer, direction);
     }
 
-    recalculateForX(arr, layer, dir) {
-        for (let c = 1; c <= arr.length; c++) {
-            if (c == 5) { continue; }
-            if (dir == -1) {
-                this.cube[arr[c - 1].i][arr[c - 1].j][layer] = arr[((c * 3) % 10) - 1].element;
-            } else {
-                this.cube[arr[c - 1].i][arr[c - 1].j][layer] = arr[((c * 7) % 10) - 1].element;
+        rotateX(layer, direction = 1) {
+            const recalculation = []
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    const element = this.cube[i][j][layer];
+                    recalculation.push({ i: i, j: j, element: element });
+                    if (element) {
+                        element.rotatePiece("x", direction);
+                    }
+                }
             }
+            this.recalculateForX(recalculation, layer, direction);
         }
-    }
 
-    rotateY(layer, direction = 1) {
-        const recalculation = [];
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                const element = this.cube[j][layer][i];
-                recalculation.push({ i: j, j: i, element: element });
-                if (element) {
-                    element.rotatePiece("y", direction);
+        recalculateForX(arr, layer, dir) {
+            for (let c = 1; c <= arr.length; c++) {
+                if (c == 5) { continue; }
+                if (dir == -1) {
+                    this.cube[arr[c - 1].i][arr[c - 1].j][layer] = arr[((c * 3) % 10) - 1].element;
+                } else {
+                    this.cube[arr[c - 1].i][arr[c - 1].j][layer] = arr[((c * 7) % 10) - 1].element;
                 }
             }
         }
-        this.recalculateForY(recalculation, layer, direction);
-    }
 
-    recalculateForY(arr, layer, dir = 1) {
-        for (let c = 1; c <= arr.length; c++) {
-            if (c == 5) {
-                continue;
-            }
-            if (dir == -1) {
-                this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
-            } else {
-                this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 7) % 10) - 1].element;
-            }
-        }
-    }
-
-    rotateZ(layer, direction = 1) {
-        const recalculation = [];
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                const element = this.cube[layer][j][i];
-                recalculation.push({ i: j, j: i, element: element });
-                if (element) {
-                    element.rotatePiece("z", direction);
+        rotateY(layer, direction = 1) {
+            const recalculation = [];
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    const element = this.cube[j][layer][i];
+                    recalculation.push({ i: j, j: i, element: element });
+                    if (element) {
+                        element.rotatePiece("y", direction);
+                    }
                 }
             }
+            this.recalculateForY(recalculation, layer, direction);
         }
-        this.recalculateForZ(recalculation, layer, direction)
-    }
-    recalculateForZ(arr, layer, dir = 1) {
-        for (let c = 1; c <= arr.length; c++) {
-            if (this.cube[layer][arr[c - 1].i][arr[c - 1].j]) {
+
+        recalculateForY(arr, layer, dir = 1) {
+            for (let c = 1; c <= arr.length; c++) {
                 if (c == 5) {
                     continue;
                 }
                 if (dir == -1) {
-                    this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
+                    this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
                 } else {
-                    this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
+                    this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 7) % 10) - 1].element;
+                }
+            }
+        }
+
+        rotateZ(layer, direction = 1) {
+            const recalculation = [];
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    const element = this.cube[layer][j][i];
+                    recalculation.push({ i: j, j: i, element: element });
+                    if (element) {
+                        element.rotatePiece("z", direction);
+                    }
+                }
+            }
+            this.recalculateForZ(recalculation, layer, direction)
+        }
+        recalculateForZ(arr, layer, dir = 1) {
+            for (let c = 1; c <= arr.length; c++) {
+                if (this.cube[layer][arr[c - 1].i][arr[c - 1].j]) {
+                    if (c == 5) {
+                        continue;
+                    }
+                    if (dir == -1) {
+                        this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
+                    } else {
+                        this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
+                    }
                 }
             }
         }
     }
-}

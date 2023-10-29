@@ -85,6 +85,7 @@ document.getElementById("rot3").onclick = () => {
     mainCube.rotateY(0, 1);
 }
 
+// draw();
 setInterval(() => {
     draw();
 }, 50);
