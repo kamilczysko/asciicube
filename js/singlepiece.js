@@ -22,49 +22,11 @@ export class SinglePiece {
         this.step = .3;
         this.isRotating = false;
 
-    }
-
-    getOrientation(axis) {
-        const a = this.axisRotations.x
-        const b = this.axisRotations.y
-        const c = this.axisRotations.z
-
-        const xx = parseInt(Math.round(Math.cos(b) * Math.cos(c)))
-        const yx = parseInt(Math.round(- Math.sin(c) * Math.cos(b)))
-        const zx = parseInt(Math.round(Math.sin(b)))
-
-        const xy = parseInt(Math.round(Math.sin(a) * Math.sin(b) * Math.cos(c) + Math.sin(c) * Math.cos(a)))
-        const yy = parseInt(Math.round(- Math.sin(a) * Math.sin(b) * Math.sin(c) + Math.cos(a) * Math.cos(c)))
-        const zy = parseInt(Math.round(- Math.sin(a) * Math.cos(b)))
-
-        const xz = parseInt(Math.round(Math.sin(a) * Math.sin(c) - Math.sin(b) * Math.cos(a) * Math.cos(c)))
-        const yz = parseInt(Math.round(Math.sin(a) * Math.cos(c) + Math.sin(b) * Math.sin(c) * Math.cos(a)))
-        const zz = parseInt(Math.round(Math.cos(a) * Math.cos(b)))
-        if (axis == "z") {
-            if (xz != 0) {
-                return { axis: "x", direction: xz };
-            } else if (yz != 0) {
-                return { axis: "y", direction: yz };
-            } else if (zz != 0) {
-                return { axis: "z", direction: zz };
-            }
-        } else if (axis == "y") {
-            if (xy != 0) {
-                return { axis: "x", direction: xy };
-            } else if (zy != 0) {
-                return { axis: "z", direction: zy };
-            } else if (yy != 0) {
-                return { axis: "y", direction: yy };
-            }
-        } else if (axis == "x") {
-            if (yx != 0) {
-                return { axis: "y", direction: yx };
-            } else if (zx != 0) {
-                return { axis: "z", direction: zx };
-            } else if (xx != 0) {
-                return { axis: "x", direction: xx };
-            }
-        }
+        this.orientation = [
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1]
+        ]
     }
 
     calcX(x, y, z, a, b, c) {
@@ -167,16 +129,29 @@ export class SinglePiece {
     }
     async rotatePiece(axis = "z", direction = 1) {
         if (this.isRotating) { return; }
-        const rotation = this.getOrientation(axis)
+        const rotation = this.getOrientation(axis, direction)
+        console.log(axis)
+        console.log("=======")
         this.isRotating = true;//if await maybe not neccessary 
-        switch (rotation.axis) {
+        if(this.axisRotations.x >= 2*Math.PI) {
+            this.axisRotations.x = 0
+            console.log("x zero@@@@@@@")
+        }
+        if(this.axisRotations.y >= 2* Math.PI) {
+            this.axisRotations.y = 0
+            console.log("y zero@@@@@@@@@")
+        }
+        
+        if(this.axisRotations.z >= 2* Math.PI) {
+            this.axisRotations.z = 0
+            console.log("z zero@@@@@@@@@")
+        }
+
+        switch (axis) {
             case "z":
                 const zInterval = await setInterval(() => {
-                    this.axisRotations.z += Math.PI / 10 * rotation.direction;
+                    this.axisRotations.z += Math.PI / 10 * direction;
                     if (this.axisRotations.z % (Math.PI / 2) == 0) {
-                        if (this.axisRotations.z == 2 * Math.PI) {
-                            // this.orientation.z = 0
-                        }
                         this.isRotating = false;
                         clearInterval(zInterval);
                     }
@@ -184,11 +159,8 @@ export class SinglePiece {
                 break;
             case "x":
                 const xInterval = await setInterval(() => {
-                    this.axisRotations.x += Math.PI / 10 * rotation.direction;
+                    this.axisRotations.x += Math.PI / 10 * direction;
                     if (this.axisRotations.x % (Math.PI / 2) == 0) {
-                        if (this.axisRotations.x == 2 * Math.PI) {
-                            // this.orientation.x = 0
-                        }
                         this.isRotating = false;
                         clearInterval(xInterval);
                     }
@@ -196,18 +168,90 @@ export class SinglePiece {
                 break;
             case "y":
                 const yInterval = await setInterval(() => {
-                    this.axisRotations.y += Math.PI / 10 * rotation.direction;
+                    this.axisRotations.y += Math.PI / 10 * direction;
                     if (this.axisRotations.y % (Math.PI / 2) == 0) {
-                        if (this.axisRotations.y == Math.PI) {
-                            // this.orientation.y = 0
-                        }
                         this.isRotating = false;
                         clearInterval(yInterval);
                     }
                 }, 100)
                 break;
         }
-        this.getOrientation()
-
+        this.updateOrientation(axis, direction);
+        console.log("======")
     }
+
+
+    getOrientation(axis, direction = 1) {
+        console.log("before update: ")
+        console.log(this.orientation[0])
+        console.log(this.orientation[1])
+        console.log(this.orientation[2])
+        console.log("after")
+        // this.updateOrientation(axis, direction);
+
+
+    
+    }
+
+    updateOrientation(axis, direction) {
+        let res = null;
+        switch (axis) {
+            case "x":
+                res = this.dot(this.rotateXMatrix(direction), this.orientation);
+                break;
+            case "y":
+                res = this.dot(this.rotateYMatrix(direction), this.orientation);
+                break;
+            case "z":
+                res = this.dot(this.rotateZMatrix(direction), this.orientation);
+                break;
+        }
+        this.orientation = res
+        console.log(this.orientation[0])
+        console.log(this.orientation[1])
+        console.log(this.orientation[2])
+        console.log("++++")
+    }
+
+    rotateXMatrix(direction = 1) {
+        const angle = Math.PI / 2 * direction
+        return [
+            [1, 0, 0],
+            [0, Math.cos(angle), - Math.sin(angle)],
+            [0, Math.sin(angle), Math.cos(angle)]
+        ]
+    }
+
+    rotateYMatrix(direction = 1) {
+        const angle = Math.PI / 2 * direction;
+        return [
+            [Math.cos(angle), 0, Math.sin(angle)],
+            [0, 1, 0],
+            [-Math.sin(angle), 0, Math.cos(angle)]
+        ]
+    }
+
+    rotateZMatrix(direction = 1) {
+        const angle = Math.PI / 2 * direction;
+        return [
+            [Math.cos(angle), -Math.sin(angle), 0],
+            [Math.sin(angle), Math.cos(angle), 0],
+            [0, 0, 1]
+        ]
+    }
+
+    dot(mat1, mat2) {
+        const result = [];
+        for (let i = 0; i < 3; i++) {
+            result[i] = [];
+            for (let j = 0; j < 3; j++) {
+                result[i][j] = 0;
+                for (let k = 0; k < 3; k++) {
+                    result[i][j] += parseInt(Math.round(mat1[i][k] * mat2[k][j]));
+                }
+            }
+        }
+        return result;
+    }
+
 } 
