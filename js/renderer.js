@@ -67,8 +67,8 @@ document.body.onmousemove = (event) => {
     if (isMouseDown) {
         const deltaX = event.clientX - mouseStart.x;
         const deltaY = event.clientY - mouseStart.y;
-        a -= deltaY / 3000;
-        b += deltaX / 3000;
+        a += deltaY / 3000;
+        b -= deltaX / 3000;
     }
 }
 

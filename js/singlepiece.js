@@ -29,22 +29,60 @@ export class SinglePiece {
         ]
     }
 
-    calcX(x, y, z, a, b, c) {
-        return (-((x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.z) - Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) + y * (Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + z * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.cos(a) - (x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + y * (-Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) + Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) - z * Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.sin(a)) * Math.sin(b) + (x * Math.cos(this.axisRotations.y) * Math.cos(this.axisRotations.z) - y * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.y) + z * Math.sin(this.axisRotations.y)) * Math.cos(b)) * Math.cos(c) + ((x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.z) - Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) + y * (Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + z * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.sin(a) + (x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + y * (-Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) + Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) - z * Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.cos(a)) * Math.sin(c);
+    createRotationQuaternion(axis, angleInRadians) {
+        var halfAngle = angleInRadians / 2;
+        var sinHalfAngle = Math.sin(halfAngle);
+        var cosHalfAngle = Math.cos(halfAngle);
+
+        // Kwaternion reprezentujący obrót wokół osi
+        var quaternion = {
+            x: 0,
+            y: 0,
+            z: 0,
+            w: 0
+        };
+
+        switch (axis) {
+            case 'x':
+                quaternion.x = sinHalfAngle;
+                break;
+            case 'y':
+                quaternion.y = sinHalfAngle;
+                break;
+            case 'z':
+                quaternion.z = sinHalfAngle;
+                break;
+            default:
+                throw new Error('Nieprawidłowa oś obrotu: ' + axis);
+        }
+
+        quaternion.w = cosHalfAngle;
+        return quaternion;
     }
 
-    calcY(x, y, z, a, b, c) {
-        return -(-((x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.z) - Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) + y * (Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + z * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.cos(a) - (x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + y * (-Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) + Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) - z * Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.sin(a)) * Math.sin(b) + (x * Math.cos(this.axisRotations.y) * Math.cos(this.axisRotations.z) - y * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.y) + z * Math.sin(this.axisRotations.y)) * Math.cos(b)) * Math.sin(c) + ((x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.z) - Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) + y * (Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + z * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.sin(a) + (x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + y * (-Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) + Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) - z * Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.cos(a)) * Math.cos(c);
-    }
-
-    calcZ(x, y, z, a, b, c) {
-        return ((x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.z) - Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) + y * (Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + z * Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.cos(a) - (x * (Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.cos(this.axisRotations.z) + Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.x)) + y * (-Math.sin(this.axisRotations.x) * Math.sin(this.axisRotations.y) * Math.sin(this.axisRotations.z) + Math.cos(this.axisRotations.x) * Math.cos(this.axisRotations.z)) - z * Math.sin(this.axisRotations.x) * Math.cos(this.axisRotations.y)) * Math.sin(a)) * Math.cos(b) + (x * Math.cos(this.axisRotations.y) * Math.cos(this.axisRotations.z) - y * Math.sin(this.axisRotations.z) * Math.cos(this.axisRotations.y) + z * Math.sin(this.axisRotations.y)) * Math.sin(b);
+    // Funkcja do pomnożenia dwóch kwaternionów (składania obrotów)
+    multiplyQuaternions(q1, q2) {
+        var result = {};
+        result.w = q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z;
+        result.x = q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y;
+        result.y = q1.w * q2.y - q1.x * q2.z + q1.y * q2.w + q1.z * q2.x;
+        result.z = q1.w * q2.z + q1.x * q2.y - q1.y * q2.x + q1.z * q2.w;
+        return result;
     }
 
     calcWall(cx, cy, cz, rotX, rotY, rotZ, char) {
-        const x = this.calcX(cx, cy, cz, rotX, rotY, rotZ)
-        const y = this.calcY(cx, cy, cz, rotX, rotY, rotZ)
-        const z = this.distanceFromScreen + this.calcZ(cx, cy, cz, rotX, rotY, rotZ)
+        let currentOrientation = { x: cx, y: cy, z: cz, w: 1 };
+        let rx = this.createRotationQuaternion('x', rotX);
+        let ry = this.createRotationQuaternion('y', rotY);
+        let rz = this.createRotationQuaternion('z', rotZ);
+
+        var newOrientation = this.multiplyQuaternions(rx, currentOrientation);
+        newOrientation = this.multiplyQuaternions(ry, newOrientation);
+        newOrientation = this.multiplyQuaternions(rz, newOrientation);
+
+        const x = newOrientation.x
+        const y = newOrientation.y
+        const z = this.distanceFromScreen + newOrientation.z
         const ooz = 1 / z;
         this.addToScreen(ooz, char, x, y, () => { });
     }
@@ -130,23 +168,6 @@ export class SinglePiece {
     async rotatePiece(axis = "z", direction = 1) {
         if (this.isRotating) { return; }
         const rotation = this.getOrientation(axis, direction)
-        console.log(axis)
-        console.log("=======")
-        this.isRotating = true;//if await maybe not neccessary 
-        if(this.axisRotations.x >= 2*Math.PI) {
-            this.axisRotations.x = 0
-            console.log("x zero@@@@@@@")
-        }
-        if(this.axisRotations.y >= 2* Math.PI) {
-            this.axisRotations.y = 0
-            console.log("y zero@@@@@@@@@")
-        }
-        
-        if(this.axisRotations.z >= 2* Math.PI) {
-            this.axisRotations.z = 0
-            console.log("z zero@@@@@@@@@")
-        }
-
         switch (axis) {
             case "z":
                 const zInterval = await setInterval(() => {
@@ -180,78 +201,22 @@ export class SinglePiece {
         console.log("======")
     }
 
+    makeRot(cx, cy, cz, axis, direction = 1) {
+        let currentOrientation = { x: cx, y: cy, z: cz, w: 1 };
 
-    getOrientation(axis, direction = 1) {
-        console.log("before update: ")
-        console.log(this.orientation[0])
-        console.log(this.orientation[1])
-        console.log(this.orientation[2])
-        console.log("after")
-        // this.updateOrientation(axis, direction);
+        let rxp = this.createRotationQuaternion('x', this.axisRotations.x);
+        let ryp = this.createRotationQuaternion('y', this.axisRotations.y);
+        let rzp = this.createRotationQuaternion('z', this.axisRotations.z);
 
+        var newOrientation = this.multiplyQuaternions(rxp, newOrientation);
+        newOrientation = this.multiplyQuaternions(ryp, newOrientation);
+        newOrientation = this.multiplyQuaternions(rzp, newOrientation);
 
-    
-    }
-
-    updateOrientation(axis, direction) {
-        let res = null;
-        switch (axis) {
-            case "x":
-                res = this.dot(this.rotateXMatrix(direction), this.orientation);
-                break;
-            case "y":
-                res = this.dot(this.rotateYMatrix(direction), this.orientation);
-                break;
-            case "z":
-                res = this.dot(this.rotateZMatrix(direction), this.orientation);
-                break;
-        }
-        this.orientation = res
-        console.log(this.orientation[0])
-        console.log(this.orientation[1])
-        console.log(this.orientation[2])
-        console.log("++++")
-    }
-
-    rotateXMatrix(direction = 1) {
-        const angle = Math.PI / 2 * direction
-        return [
-            [1, 0, 0],
-            [0, Math.cos(angle), - Math.sin(angle)],
-            [0, Math.sin(angle), Math.cos(angle)]
-        ]
-    }
-
-    rotateYMatrix(direction = 1) {
-        const angle = Math.PI / 2 * direction;
-        return [
-            [Math.cos(angle), 0, Math.sin(angle)],
-            [0, 1, 0],
-            [-Math.sin(angle), 0, Math.cos(angle)]
-        ]
-    }
-
-    rotateZMatrix(direction = 1) {
-        const angle = Math.PI / 2 * direction;
-        return [
-            [Math.cos(angle), -Math.sin(angle), 0],
-            [Math.sin(angle), Math.cos(angle), 0],
-            [0, 0, 1]
-        ]
-    }
-
-    dot(mat1, mat2) {
-        const result = [];
-        for (let i = 0; i < 3; i++) {
-            result[i] = [];
-            for (let j = 0; j < 3; j++) {
-                result[i][j] = 0;
-                for (let k = 0; k < 3; k++) {
-                    result[i][j] += parseInt(Math.round(mat1[i][k] * mat2[k][j]));
-                }
-            }
-        }
-        return result;
+        const x = newOrientation.x
+        const y = newOrientation.y
+        const z = this.distanceFromScreen + newOrientation.z
+        const ooz = 1 / z;
+        this.addToScreen(ooz, char, x, y, () => { });
     }
 
 } 
