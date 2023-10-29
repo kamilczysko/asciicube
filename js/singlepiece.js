@@ -72,10 +72,6 @@ export class SinglePiece {
                 return { axis: "x", direction: xx };
             }
         }
-        console.log(xx, yx, zx)
-        console.log(xy, yy, zy)
-        console.log(xz, yz, zz)
-        console.log("=======")
     }
 
     calcX(x, y, z, a, b, c) {
