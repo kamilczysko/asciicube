@@ -1,3 +1,5 @@
+
+import { Quaternion } from "./quaternion.js";
 export class SinglePiece {
 
     constructor(id, position, data, visibleWalls) {
@@ -27,45 +29,6 @@ export class SinglePiece {
             [0, 1, 0],
             [0, 0, 1]
         ]
-    }
-
-    createRotationQuaternion(axis, angleInRadians) {
-        var halfAngle = angleInRadians / 2;
-        var sinHalfAngle = Math.sin(halfAngle);
-        var cosHalfAngle = Math.cos(halfAngle);
-
-        // Kwaternion reprezentujący obrót wokół osi
-        var quaternion = {
-            x: 0,
-            y: 0,
-            z: 0,
-            w: 0
-        };
-
-        switch (axis) {
-            case 'x':
-                quaternion.x = sinHalfAngle;
-                break;
-            case 'y':
-                quaternion.y = sinHalfAngle;
-                break;
-            case 'z':
-                quaternion.z = sinHalfAngle;
-                break;
-        }
-
-        quaternion.w = cosHalfAngle;
-        return (quaternion);
-    }
-
-    // Funkcja do pomnożenia dwóch kwaternionów (składania obrotów)
-    multiplyQuaternions(q1, q2) {
-        var result = {};
-        result.w = q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z;
-        result.x = q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y;
-        result.y = q1.w * q2.y - q1.x * q2.z + q1.y * q2.w + q1.z * q2.x;
-        result.z = q1.w * q2.z + q1.x * q2.y - q1.y * q2.x + q1.z * q2.w;
-        return result;
     }
 
     calcWall(cx, cy, cz, rotX, rotY, rotZ, char) {
@@ -177,27 +140,24 @@ export class SinglePiece {
         if (this.isRotating) { return; }
         switch (axis) {
             case "z":
-                // this.axisRotations.z += Math.PI / 2 * direction;
                 const zInterval = await setInterval(() => {
                     this.axisRotations.z += Math.PI / 10 * direction;
-                    if (this.axisRotations.z % (Math.PI/2) == 0) {
+                    if (this.axisRotations.z % (Math.PI / 2) == 0) {
                         this.isRotating = false;
                         clearInterval(zInterval);
                     }
                 }, 100)
                 break;
             case "x":
-                // this.axisRotations.x += Math.PI / 2 * direction;
                 const xInterval = await setInterval(() => {
                     this.axisRotations.x += Math.PI / 10 * direction;
-                    if (this.axisRotations.x % (Math.PI/2) == 0) {
+                    if (this.axisRotations.x % (Math.PI / 2) == 0) {
                         this.isRotating = false;
                         clearInterval(xInterval);
                     }
                 }, 100)
                 break;
             case "y":
-                // this.axisRotations.y += Math.PI / 2 * direction;
                 const yInterval = await setInterval(() => {
                     this.axisRotations.y += Math.PI / 10 * direction;
                     if (this.axisRotations.y % (Math.PI / 2) == 0) {
@@ -207,40 +167,95 @@ export class SinglePiece {
                 }, 100)
                 break;
         }
+        this.getOrientation()
+        this.updateOrientation(axis, direction);
+        this.getOrientation()
+        console.log("=======")
     }
-
-    normalizeQuaternion(q) {
-        const magnitude = Math.sqrt(q.w * q.w + q.x * q.x + q.y * q.y + q.z * q.z);
-        
-        if (magnitude === 0) {
-          return { w: 1, x: 0, y: 0, z: 0 }; // Zapobiegamy dzieleniu przez zero
-        }
-        
-        const invMagnitude = 1 / magnitude;
-        return {
-          w: q.w * invMagnitude,
-          x: q.x * invMagnitude,
-          y: q.y * invMagnitude,
-          z: q.z * invMagnitude
-        };
-      }
 
     makeRot(cx, cy, cz, char) {
         let currentOrientation = { x: cx, y: cy, z: cz, w: 1 };
+        const rotationX = Quaternion.fromAxisAngleX(this.axisRotations.x).normalize();
+        const rotationY = Quaternion.fromAxisAngleY(this.axisRotations.y).normalize();
+        const rotationZ = Quaternion.fromAxisAngleZ(this.axisRotations.z).normalize();
 
-        let rxp = this.createRotationQuaternion('x', this.axisRotations.x);
-        let ryp = this.createRotationQuaternion('y', this.axisRotations.y);
-        let rzp = this.createRotationQuaternion('z', this.axisRotations.z);
+        let totalRotation = rotationX.normalize().multiply(rotationY).normalize().multiply(rotationZ).normalize();
+        totalRotation = totalRotation.normalize();
+        const result = totalRotation.rotateVector(currentOrientation);
 
-        var newOrientation = this.multiplyQuaternions(rxp, currentOrientation);
-        newOrientation = this.multiplyQuaternions(ryp, newOrientation);
-        newOrientation = this.multiplyQuaternions(rzp, newOrientation);
-
-        const x = newOrientation.x
-        const y = newOrientation.y
-        const z = this.distanceFromScreen + newOrientation.z
+        const x = result.x
+        const y = result.y
+        const z = this.distanceFromScreen + result.z
         const ooz = 1 / z;
         this.addToScreen(ooz, char, x, y, () => { });
+    }
+
+    getOrientation() {
+        console.log(this.orientation[0])
+        console.log(this.orientation[1])
+        console.log(this.orientation[2])
+        // this.updateOrientation(axis, direction);    
+    }
+
+    updateOrientation(axis, direction) {
+        let res = null;
+        switch (axis) {
+            case "x":
+                res = this.dot(this.rotateXMatrix(direction), this.orientation);
+                break;
+            case "y":
+                res = this.dot(this.rotateYMatrix(direction), this.orientation);
+                break;
+            case "z":
+                res = this.dot(this.rotateZMatrix(direction), this.orientation);
+                break;
+        }
+        this.orientation = res
+        console.log(this.orientation[0])
+        console.log(this.orientation[1])
+        console.log(this.orientation[2])
+        console.log("++++")
+    }
+
+    rotateXMatrix(direction = 1) {
+        const angle = Math.PI / 2 * direction
+        return [
+            [1, 0, 0],
+            [0, Math.cos(angle), - Math.sin(angle)],
+            [0, Math.sin(angle), Math.cos(angle)]
+        ]
+    }
+
+    rotateYMatrix(direction = 1) {
+        const angle = Math.PI / 2 * direction;
+        return [
+            [Math.cos(angle), 0, Math.sin(angle)],
+            [0, 1, 0],
+            [-Math.sin(angle), 0, Math.cos(angle)]
+        ]
+    }
+
+    rotateZMatrix(direction = 1) {
+        const angle = Math.PI / 2 * direction;
+        return [
+            [Math.cos(angle), -Math.sin(angle), 0],
+            [Math.sin(angle), Math.cos(angle), 0],
+            [0, 0, 1]
+        ]
+    }
+
+    dot(mat1, mat2) {
+        const result = [];
+        for (let i = 0; i < 3; i++) {
+            result[i] = [];
+            for (let j = 0; j < 3; j++) {
+                result[i][j] = 0;
+                for (let k = 0; k < 3; k++) {
+                    result[i][j] += parseInt(Math.round(mat1[i][k] * mat2[k][j]));
+                }
+            }
+        }
+        return result;
     }
 
 } 
