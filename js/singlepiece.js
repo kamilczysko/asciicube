@@ -170,7 +170,8 @@ export class SinglePiece {
                 }
                 this.axisRotations.z += Math.PI / 2
                 // this.coz += 1 * direction;
-                this.rotQ = (this.rotQ).mul(Q.rotateZ(this.axisRotations.z))
+                // this.rotQ = (this.rotQ).mul(Q.rotateZ(this.axisRotations.z))
+                this.rotQ = Q.rotateZ(Math.PI/2).mul(this.rotQ)
                 
                 break;
             case "x":
@@ -180,7 +181,8 @@ export class SinglePiece {
                 this.axisRotations.x += Math.PI / 2
                 // this.cow += 1 * direction;
                 // this.cox += 1 * direction;
-                this.rotQ = (this.rotQ).mul(Q.rotateX(this.axisRotations.x))
+                // this.rotQ = (this.rotQ).mul(Q.rotateX(this.axisRotations.x))
+                this.rotQ = Q.rotateX(Math.PI/2).mul(this.rotQ)
 
                 break;
             case "y":
@@ -189,7 +191,8 @@ export class SinglePiece {
                 }
                 this.axisRotations.y += Math.PI / 2
                 // this.coy += 1 * direction;
-                this.rotQ = (this.rotQ).mul(Q.rotateY(this.axisRotations.y))
+                // this.rotQ = (this.rotQ).mul(Q.rotateY(this.axisRotations.y))
+                this.rotQ = Q.rotateY(Math.PI/2).mul(this.rotQ)
 
                 break;
         }
