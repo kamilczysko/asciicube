@@ -31,7 +31,7 @@ const saveLocation = (ooz, char, x, y, callback) => {
 const data = { width: pieceWidth, distance: K2, save: saveLocation }
 
 const mainCube = new Cube(data);
-const el  = new SinglePiece(11, { x: -3 * pieceWidth - 0, y: -3 * pieceWidth - 0, z: -3 * pieceWidth - 0 }, data, { front: true, left: true, top: true, bottom: true, right: true });
+const el  = new SinglePiece(11, { x: -3 * pieceWidth - 0, y: -3 * pieceWidth - 0, z: -3 * pieceWidth - 0 }, data, { front: true, left: true, top: true, bottom: true, right: true, back: true });
 //todo remove el
 function draw() {
     output = Array(screenSize).fill(" ")
