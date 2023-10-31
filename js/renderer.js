@@ -51,19 +51,19 @@ function draw() {
 let isMouseDown = false;
 let mouseStart = { x: 0, y: 0 };
 let mouseEnd = { x: 0, y: 0 };
-document.body.onmousedown = (event) => {
+document.getElementById("canvas").onmousedown = (event) => {
     isMouseDown = true;
     mouseStart.x = event.clientX;
     mouseStart.y = event.clientY;
 }
 
-document.body.onmouseup = (event) => {
+document.getElementById("canvas").onmouseup = (event) => {
     isMouseDown = false;
     mouseEnd.x = event.clientX;
     mouseEnd.y = event.clientY;
 }
 
-document.body.onmousemove = (event) => {
+document.getElementById("canvas").onmousemove = (event) => {
     if (isMouseDown) {
         const deltaX = event.clientX - mouseStart.x;
         const deltaY = event.clientY - mouseStart.y;
@@ -129,4 +129,4 @@ document.getElementById("w").oninput = () => {
 // draw();
 setInterval(() => {
     draw();
-}, 100);
+}, 10);

@@ -34,33 +34,39 @@ export class SinglePiece {
             [0, 0, 1]
         ]
         this.counter = 0;
-        this.rotX = Q.rotateX(Math.PI/2)
+        this.rotXN = Q.rotateX(Math.PI/2)
+        this.rotYN = Q.rotateX(Math.PI/2)
+        this.rotZN = Q.rotateX(Math.PI/2)
+
+        this.rotX = Q.rotateX(0)
         this.rotY = Q.rotateY(0)
         this.rotZ = Q.rotateZ(0)
+
         this.rotQ = this.rotX.mul(this.rotY).mul(this.rotZ)
+        
         this.cox = 0;
         this.coy = 0;
         this.coz = 0;
         this.cow = 0;
     }
 
-    // calcWall(cx, cy, cz, rotX, rotY, rotZ, char) {
+    calcWall(cx, cy, cz, rotX, rotY, rotZ, char) {
 
-    //     this.currentOrientation = { x: cx, y: cy, z: cz, w: 1 };
-    //     const rotationX = Quaternion.fromAxisAngleX(this.axisRotations.x).normalize();
-    //     const rotationY = Quaternion.fromAxisAngleY(this.axisRotations.y).normalize();
-    //     const rotationZ = Quaternion.fromAxisAngleZ(this.axisRotations.z).normalize();
+        this.currentOrientation = new Q(cx, cy, cz, 1);
+        const rotationX = Q.rotateX(rotX).normalize();
+        const rotationY = Q.rotateY(rotY).normalize();
+        const rotationZ = Q.rotateZ(rotZ).normalize();
 
-    //     let totalRotation = rotationX.normalize().multiply(rotationY).normalize().multiply(rotationZ).normalize();
-    //     totalRotation = totalRotation.normalize();
-    //     const result = totalRotation.rotateVector(this.currentOrientation);
+        const totalRot = rotationZ.mul(rotationY).mul(rotationX).normalize();
 
-    //     const x = result.x
-    //     const y = result.y
-    //     const z = this.distanceFromScreen + result.z
-    //     const ooz = 1 / z;
-    //     this.addToScreen(ooz, char, x, y, () => { });
-    // }
+        this.currentOrientation = totalRot.normalize().mul(this.rotQ).mul(this.currentOrientation).mul(totalRot.normalize().mul(this.rotQ).getInv())
+
+        const x = this.currentOrientation.x
+        const y = this.currentOrientation.y
+        const z = this.distanceFromScreen + this.currentOrientation.z
+        const ooz = 1 / z;
+        this.addToScreen(ooz, char, x, y, () => { });
+    }
 
     draw(rotation) {
         if (this.left) {
@@ -71,8 +77,8 @@ export class SinglePiece {
                         (parseInt(Math.floor(c)) == parseInt(this.position.z + (2 * this.height)) - 1)) {
                         char = " "
                     }
-                    // this.calcWall(this.position.x, b, c, rotation.x, rotation.y, rotation.z, char);
-                    this.makeRot(this.position.x, b, c, char);
+                    this.calcWall(this.position.x, b, c, rotation.x, rotation.y, rotation.z, char);
+                    // this.makeRot(this.position.x, b, c, char);
                 }
             }
         }
@@ -84,8 +90,8 @@ export class SinglePiece {
                         (parseInt(Math.floor(b)) == parseInt(this.position.y + (2 * this.height)) - 1)) {
                         char = " "
                     }
-                    // this.calcWall(this.position.x + (2 * this.height), b, c, rotation.x, rotation.y, rotation.z, char);
-                    this.makeRot(this.position.x + (2 * this.height), b, c, char);
+                    this.calcWall(this.position.x + (2 * this.height), b, c, rotation.x, rotation.y, rotation.z, char);
+                    // this.makeRot(this.position.x + (2 * this.height), b, c, char);
                 }
             }
         }
@@ -98,8 +104,8 @@ export class SinglePiece {
                         (parseInt(Math.floor(c)) == parseInt(this.position.z + (2 * this.height)) - 1)) {
                         char = " "
                     }
-                    // this.calcWall(a, this.position.y, c, rotation.x, rotation.y, rotation.z, char);
-                    this.makeRot(a, this.position.y, c, char);
+                    this.calcWall(a, this.position.y, c, rotation.x, rotation.y, rotation.z, char);
+                    // this.makeRot(a, this.position.y, c, char);
 
                 }
             }
@@ -113,8 +119,8 @@ export class SinglePiece {
                         (parseInt(Math.floor(c)) == parseInt(this.position.z + (2 * this.height)) - 1)) {
                         char = " "
                     }
-                    // this.calcWall(a, this.position.y + (2 * this.height), c, rotation.x, rotation.y, rotation.z, char);
-                    this.makeRot(a, this.position.y + (2 * this.height), c, char);
+                    this.calcWall(a, this.position.y + (2 * this.height), c, rotation.x, rotation.y, rotation.z, char);
+                    // this.makeRot(a, this.position.y + (2 * this.height), c, char);
 
                 }
             }
@@ -128,8 +134,8 @@ export class SinglePiece {
                         (b == this.position.y || parseInt(Math.floor(b)) == parseInt(this.position.y + (2 * this.height) - 1))) {
                         char = " "
                     }
-                    // this.calcWall(a, b, this.position.z, rotation.x, rotation.y, rotation.z, char);
-                    this.makeRot(a, b, this.position.z, char);
+                    this.calcWall(a, b, this.position.z, rotation.x, rotation.y, rotation.z, char);
+                    // this.makeRot(a, b, this.position.z, char);
 
                 }
             }
@@ -143,8 +149,8 @@ export class SinglePiece {
                         (b == this.position.y || parseInt(Math.floor(b)) == parseInt(this.position.y + (2 * this.height) - 1))) {
                         char = " "
                     }
-                    // this.calcWall(a, b, this.position.z + (2 * this.height), rotation.x, rotation.y, rotation.z, char);
-                    this.makeRot(a, b, this.position.z + (2 * this.height), char);
+                    this.calcWall(a, b, this.position.z + (2 * this.height), rotation.x, rotation.y, rotation.z, char);
+                    // this.makeRot(a, b, this.position.z + (2 * this.height), char);
                 }
             }
         }
@@ -155,16 +161,31 @@ export class SinglePiece {
         switch (axis) {
             case "z":
                 this.axisRotations.z += Math.PI / 2
-                this.coz += 1 * direction;
+                if(this.axisRotations.z == 2 * Math.PI) {
+                    this.axisRotations.z = 0
+                }
+                // this.coz += 1 * direction;
+                this.rotQ = (this.rotQ).mul(Q.rotateZ(this.axisRotations.z))
+                
                 break;
             case "x":
                 this.axisRotations.x += Math.PI / 2
+                if(this.axisRotations.x == 2 * Math.PI) {
+                    this.axisRotations.x = 0
+                }
                 // this.cow += 1 * direction;
-                this.cox += 1 * direction;
+                // this.cox += 1 * direction;
+                this.rotQ = (this.rotQ).mul(Q.rotateX(this.axisRotations.x))
+
                 break;
             case "y":
                 this.axisRotations.y += Math.PI / 2
-                this.coy += 1 * direction;
+                // this.coy += 1 * direction;
+                if(this.axisRotations.y == 2 * Math.PI) {
+                    this.axisRotations.y = 0
+                }
+                this.rotQ = (this.rotQ).mul(Q.rotateY(this.axisRotations.y))
+
                 break;
         }
         this.updateOrientation(axis, direction);
@@ -184,43 +205,14 @@ export class SinglePiece {
     }
 
     makeRot(cx, cy, cz, char) {
-        if(this.axisRotations.x == 2 * Math.PI || this.axisRotations.x == -2 * Math.PI) {
-            console.log("xreset")
-            this.axisRotations.x = 0
-        }
-        if(this.axisRotations.x == 1.5 * Math.PI) {
-            console.log("xreset - ")
-            this.axisRotations.x = - Math.PI / 2
-        }
+        this.currentOrientation = new Q(cx, cy, cz, 1);
         
-        if(this.axisRotations.y == 2 * Math.PI || this.axisRotations.y == -2 * Math.PI) {
-            console.log("yreset")
-            this.axisRotations.y = 0
-        }
-        if(this.axisRotations.y == 1.5 * Math.PI) {
-            console.log("yreset - ")
-            this.axisRotations.y = - Math.PI / 2
-        }
-        
-        if(this.axisRotations.z == 2 * Math.PI || this.axisRotations.z == -2 * Math.PI) {
-            console.log("zreset")
-            this.axisRotations.z = 0
-        }
-        if(this.axisRotations.z == 1.5 * Math.PI) {
-            console.log("zreset - ")
-            this.axisRotations.z = - Math.PI / 2
-        }
-        this.currentOrientation = new Q(cx, cy, cz, 0);
-        // const rotX = Q.rotateX(this.axisRotations.x)
-        // const rotY = Q.rotateY(this.axisRotations.y)
-        // const rotZ = Q.rotateZ(this.axisRotations.z)
-        this.rotQ.setX(this.cox);
-        this.rotQ.setY(this.coy);
-        this.rotQ.setZ(this.coz);
+        // this.rotQ.setX(this.cox);
+        // this.rotQ.setY(this.coy);
+        // this.rotQ.setZ(this.coz);
         // this.rotQ.setW(this.cow);
-        const a = this.rotQ.normalize()
-        // a.setX(1);
-        this.currentOrientation = a.mul(this.currentOrientation).mul(a.getInv())
+
+        this.currentOrientation = this.rotQ.normalize().mul(this.currentOrientation).mul(this.rotQ.getInv().normalize())
 
         const x = this.currentOrientation.x
         const y = this.currentOrientation.y
