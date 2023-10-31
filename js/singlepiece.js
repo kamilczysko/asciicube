@@ -164,9 +164,9 @@ export class SinglePiece {
         let counter = 0.0;
         this.isRotating = true;
         const interval = setInterval(() => {
-            counter = counter + 0.4;
-            this.rotQ = Q.slerp(this.rotQ, endQ, .2)
-            if (counter >= 3) {
+            counter = counter + 0.1;
+            this.rotQ = Q.slerp(this.rotQ, endQ, counter)
+            if (counter >= 1) {
                 clearInterval(interval);
                 this.rotQ = endQ;
                 this.isRotating = false;
