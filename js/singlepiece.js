@@ -64,7 +64,7 @@ export class SinglePiece {
         if (this.left) {
             for (let b = this.position.y; b <= this.position.y + (2 * this.height); b += this.step) {
                 for (let c = this.position.z; c <= this.position.z + (2 * this.height); c += this.step) {
-                    let char = "+"
+                    let char = "|"
                     if ((b == this.position.y || parseInt(Math.floor(b)) == parseInt(this.position.y + (2 * this.width) - 1)) ||
                         (parseInt(Math.floor(c)) == parseInt(this.position.z + (2 * this.height)) - 1)) {
                         char = " "

@@ -7,5 +7,6 @@ TODOS:
 - add scrambling, and editor 
 + styles - looks good for me XD
 - refactor
-- still rotattion of wrong cubelets sometimes
++ still rotattion of wrong cubelets sometimes -- hope its done
 - dont calculate frames when no action performed
+- fix scaling

@@ -146,10 +146,7 @@ export class Cube {
                 continue;
             }
             if (dir == -1) {
-                // this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
-                this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 7) % 10) - 1].element;
-                this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 7) % 10) - 1].element;
-                this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 7) % 10) - 1].element;
+                this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
             } else {
                 this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 7) % 10) - 1].element;
             }
@@ -160,8 +157,8 @@ export class Cube {
         const recalculation = [];
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                const element = this.cube[layer][j][i];
-                recalculation.push({ i: j, j: i, element: element });
+                const element = this.cube[layer][i][j];
+                recalculation.push({ i: i, j: j, element: element });
                 if (element) {
                     element.rotatePiece("z", direction);
                 }
@@ -176,12 +173,9 @@ export class Cube {
                     continue;
                 }
                 if (dir == -1) {
-                    // this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
-                    this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
-                    this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
                     this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
                 } else {
-                    this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
+                    this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 7) % 10) - 1].element;
                 }
             }
         }
