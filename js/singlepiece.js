@@ -1,5 +1,7 @@
 
 import { Quaternion } from "./quaternion.js";
+import { Q } from "./quat.js";
+
 export class SinglePiece {
 
     constructor(id, position, data, visibleWalls) {
@@ -21,6 +23,8 @@ export class SinglePiece {
         this.front = visibleWalls.front
         this.back = visibleWalls.back
 
+        this.currentOrientation = null;
+
         this.step = .3;
         this.isRotating = false;
 
@@ -29,24 +33,34 @@ export class SinglePiece {
             [0, 1, 0],
             [0, 0, 1]
         ]
+        this.counter = 0;
+        this.rotX = Q.rotateX(Math.PI/2)
+        this.rotY = Q.rotateY(0)
+        this.rotZ = Q.rotateZ(0)
+        this.rotQ = this.rotX.mul(this.rotY).mul(this.rotZ)
+        this.cox = 0;
+        this.coy = 0;
+        this.coz = 0;
+        this.cow = 0;
     }
 
-    calcWall(cx, cy, cz, rotX, rotY, rotZ, char) {
-        let currentOrientation = { x: cx, y: cy, z: cz, w: 1 };
-        let rx = this.createRotationQuaternion('x', rotX);
-        let ry = this.createRotationQuaternion('y', rotY);
-        let rz = this.createRotationQuaternion('z', rotZ);
+    // calcWall(cx, cy, cz, rotX, rotY, rotZ, char) {
 
-        var newOrientation = this.multiplyQuaternions(rx, currentOrientation);
-        newOrientation = this.multiplyQuaternions(ry, newOrientation);
-        newOrientation = this.multiplyQuaternions(rz, newOrientation);
+    //     this.currentOrientation = { x: cx, y: cy, z: cz, w: 1 };
+    //     const rotationX = Quaternion.fromAxisAngleX(this.axisRotations.x).normalize();
+    //     const rotationY = Quaternion.fromAxisAngleY(this.axisRotations.y).normalize();
+    //     const rotationZ = Quaternion.fromAxisAngleZ(this.axisRotations.z).normalize();
 
-        const x = newOrientation.x
-        const y = newOrientation.y
-        const z = this.distanceFromScreen + newOrientation.z
-        const ooz = 1 / z;
-        this.addToScreen(ooz, char, x, y, () => { });
-    }
+    //     let totalRotation = rotationX.normalize().multiply(rotationY).normalize().multiply(rotationZ).normalize();
+    //     totalRotation = totalRotation.normalize();
+    //     const result = totalRotation.rotateVector(this.currentOrientation);
+
+    //     const x = result.x
+    //     const y = result.y
+    //     const z = this.distanceFromScreen + result.z
+    //     const ooz = 1 / z;
+    //     this.addToScreen(ooz, char, x, y, () => { });
+    // }
 
     draw(rotation) {
         if (this.left) {
@@ -140,55 +154,97 @@ export class SinglePiece {
         if (this.isRotating) { return; }
         switch (axis) {
             case "z":
-                const zInterval = await setInterval(() => {
-                    this.axisRotations.z += Math.PI / 10 * direction;
-                    if (this.axisRotations.z % (Math.PI / 2) == 0) {
-                        this.isRotating = false;
-                        clearInterval(zInterval);
-                    }
-                }, 100)
+                this.axisRotations.z += Math.PI / 2
+                this.coz += 1 * direction;
                 break;
             case "x":
-                const xInterval = await setInterval(() => {
-                    this.axisRotations.x += Math.PI / 10 * direction;
-                    if (this.axisRotations.x % (Math.PI / 2) == 0) {
-                        this.isRotating = false;
-                        clearInterval(xInterval);
-                    }
-                }, 100)
+                this.axisRotations.x += Math.PI / 2
+                // this.cow += 1 * direction;
+                this.cox += 1 * direction;
                 break;
             case "y":
-                const yInterval = await setInterval(() => {
-                    this.axisRotations.y += Math.PI / 10 * direction;
-                    if (this.axisRotations.y % (Math.PI / 2) == 0) {
-                        this.isRotating = false;
-                        clearInterval(yInterval);
-                    }
-                }, 100)
+                this.axisRotations.y += Math.PI / 2
+                this.coy += 1 * direction;
                 break;
         }
-        this.getOrientation()
         this.updateOrientation(axis, direction);
-        this.getOrientation()
-        console.log("=======")
+    }
+
+    setI(i){
+        this.cox = i;
+    }
+    setJ(j){
+        this.coy = j;
+    }
+    setK(k){
+        this.coz = k;
+    }
+    setW(w){
+        this.cow = w;
     }
 
     makeRot(cx, cy, cz, char) {
-        let currentOrientation = { x: cx, y: cy, z: cz, w: 1 };
-        const rotationX = Quaternion.fromAxisAngleX(this.axisRotations.x).normalize();
-        const rotationY = Quaternion.fromAxisAngleY(this.axisRotations.y).normalize();
-        const rotationZ = Quaternion.fromAxisAngleZ(this.axisRotations.z).normalize();
+        if(this.axisRotations.x == 2 * Math.PI || this.axisRotations.x == -2 * Math.PI) {
+            console.log("xreset")
+            this.axisRotations.x = 0
+        }
+        if(this.axisRotations.x == 1.5 * Math.PI) {
+            console.log("xreset - ")
+            this.axisRotations.x = - Math.PI / 2
+        }
+        
+        if(this.axisRotations.y == 2 * Math.PI || this.axisRotations.y == -2 * Math.PI) {
+            console.log("yreset")
+            this.axisRotations.y = 0
+        }
+        if(this.axisRotations.y == 1.5 * Math.PI) {
+            console.log("yreset - ")
+            this.axisRotations.y = - Math.PI / 2
+        }
+        
+        if(this.axisRotations.z == 2 * Math.PI || this.axisRotations.z == -2 * Math.PI) {
+            console.log("zreset")
+            this.axisRotations.z = 0
+        }
+        if(this.axisRotations.z == 1.5 * Math.PI) {
+            console.log("zreset - ")
+            this.axisRotations.z = - Math.PI / 2
+        }
+        this.currentOrientation = new Q(cx, cy, cz, 0);
+        // const rotX = Q.rotateX(this.axisRotations.x)
+        // const rotY = Q.rotateY(this.axisRotations.y)
+        // const rotZ = Q.rotateZ(this.axisRotations.z)
+        this.rotQ.setX(this.cox);
+        this.rotQ.setY(this.coy);
+        this.rotQ.setZ(this.coz);
+        // this.rotQ.setW(this.cow);
+        const a = this.rotQ.normalize()
+        // a.setX(1);
+        this.currentOrientation = a.mul(this.currentOrientation).mul(a.getInv())
 
-        let totalRotation = rotationX.normalize().multiply(rotationY).normalize().multiply(rotationZ).normalize();
-        totalRotation = totalRotation.normalize();
-        const result = totalRotation.rotateVector(currentOrientation);
-
-        const x = result.x
-        const y = result.y
-        const z = this.distanceFromScreen + result.z
+        const x = this.currentOrientation.x
+        const y = this.currentOrientation.y
+        const z = this.distanceFromScreen + this.currentOrientation.z
         const ooz = 1 / z;
         this.addToScreen(ooz, char, x, y, () => { });
     }
+
+    // makeRot(cx, cy, cz, char) {
+    //     this.currentOrientation = { x: cx, y: cy, z: cz, w: 1 };
+    //     const rotationX = Quaternion.fromAxisAngleX(this.axisRotations.x).normalize();
+    //     const rotationY = Quaternion.fromAxisAngleY(this.axisRotations.y).normalize();
+    //     const rotationZ = Quaternion.fromAxisAngleZ(this.axisRotations.z).normalize();
+
+    //     let totalRotation = rotationX.normalize().multiply(rotationY).normalize().multiply(rotationZ).normalize();
+    //     totalRotation = totalRotation.normalize();
+    //     const result = totalRotation.rotateVector(this.currentOrientation);
+
+    //     const x = result.x
+    //     const y = result.y
+    //     const z = this.distanceFromScreen + result.z
+    //     const ooz = 1 / z;
+    //     this.addToScreen(ooz, char, x, y, () => { });
+    // }
 
     getOrientation() {
         console.log(this.orientation[0])
@@ -211,10 +267,10 @@ export class SinglePiece {
                 break;
         }
         this.orientation = res
-        console.log(this.orientation[0])
-        console.log(this.orientation[1])
-        console.log(this.orientation[2])
-        console.log("++++")
+    //     console.log(this.orientation[0])
+    //     console.log(this.orientation[1])
+    //     console.log(this.orientation[2])
+    //     console.log("++++")
     }
 
     rotateXMatrix(direction = 1) {

@@ -31,7 +31,7 @@ const saveLocation = (ooz, char, x, y, callback) => {
 const data = { width: pieceWidth, distance: K2, save: saveLocation }
 
 const mainCube = new Cube(data);
-const el  = new SinglePiece(11, { x: -3 * pieceWidth - 0, y: -3 * pieceWidth - 0, z: -3 * pieceWidth - 0 }, data, { front: true, left: true, top: true });
+const el  = new SinglePiece(11, { x: -3 * pieceWidth - 0, y: -3 * pieceWidth - 0, z: -3 * pieceWidth - 0 }, data, { front: true, left: true, top: true, bottom: true, right: true });
 //todo remove el
 function draw() {
     output = Array(screenSize).fill(" ")
@@ -79,13 +79,13 @@ document.getElementById("rot1").onclick = () => {
 
 
 document.getElementById("rot2").onclick = () => {
-    el.rotatePiece("z", 1)
+    el.rotatePiece("y", 1)
     // mainCube.rotateZ(0, 1);
 }
 
 
 document.getElementById("rot3").onclick = () => {
-    el.rotatePiece("y", 1)
+    el.rotatePiece("z", 1)
     // mainCube.rotateY(0, 1);
 }
 
@@ -96,17 +96,37 @@ document.getElementById("rot11").onclick = () => {
 
 
 document.getElementById("rot22").onclick = () => {
-    el.rotatePiece("z", -1)
+    el.rotatePiece("y", -1)
     // mainCube.rotateZ(0, -1);
 }
 
 
 document.getElementById("rot33").onclick = () => {
-    el.rotatePiece("y", -1)
+    el.rotatePiece("z", -1)
     // mainCube.rotateY(0, -1);
+}
+
+document.getElementById("i").oninput = () => {
+    el.setI(document.getElementById("i").value/100);
+    document.getElementById("ilabel").innerText = document.getElementById("i").value/100
+}
+
+document.getElementById("j").oninput = () => {
+    el.setJ(document.getElementById("j").value/100);
+    document.getElementById("jlabel").innerText = document.getElementById("j").value/100
+}
+
+document.getElementById("k").oninput = () => {
+    el.setK(document.getElementById("k").value/100);
+    document.getElementById("klabel").innerText = document.getElementById("k").value/100
+}
+
+document.getElementById("w").oninput = () => {
+    el.setW(document.getElementById("w").value/100);
+    document.getElementById("wlabel").innerText = document.getElementById("w").value/100
 }
 
 // draw();
 setInterval(() => {
     draw();
-}, 50);
+}, 100);

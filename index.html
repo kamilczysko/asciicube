@@ -8,7 +8,8 @@
             "imports" : {
                 "singlepiece": "./js/singlepiece.js",
                 "cube": "./js/cube.js",
-                "quaternion": "./js/quaternion.js"
+                "quaternion": "./js/quaternion.js",
+                "quat": "./js/quat.js"
             }
         }
     </script>
@@ -21,9 +22,27 @@
     <script type="module" src="./js/renderer.js"></script>
     <button id="rot1">ROT X</button>
     <button id="rot11">ROT -X</button>
-    <button id="rot3">ROT Y</button>
-    <button id="rot33">ROT -Y</button>
-    <button id="rot2">ROT Z</button>
-    <button id="rot22">ROT -Z</button>
+    <button id="rot2">ROT Y</button>
+    <button id="rot22">ROT -Y</button>
+    <button id="rot3">ROT Z</button>
+    <button id="rot33">ROT -Z</button>
+    <div>
+        <div>
+            <input type="range" min="-100" max="100" id="i">
+            <p>i: <span id="ilabel">0</span></p>
+        </div>
+        <div>
+            <input type="range" min="-100" max="100" id="j">
+            <p>j: <span id="jlabel">0</span></p>
+        </div>
+        <div>
+            <input type="range" min="-100" max="100" id="k">
+            <p>k: <span id="klabel">0</span></p>
+        </div>
+        <div>
+            <input type="range" min="-100" max="100" id="w">
+            <p>w: <span id="wlabel">0</span></p>
+        </div>
+    </div>
 </body>
 </html>
