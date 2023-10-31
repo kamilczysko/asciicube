@@ -1,3 +1,8 @@
-X: x*Math.cos(this.orientation.y)*Math.cos(this.orientation.z) - y*Math.sin(this.orientation.z)*Math.cos(this.orientation.y) + z*Math.sin(this.orientation.y)
-Y: x*(Math.sin(this.orientation.x)*Math.sin(this.orientation.y)*Math.cos(this.orientation.z) + Math.sin(this.orientation.z)*Math.cos(this.orientation.x)) + y*(-Math.sin(this.orientation.x)*Math.sin(this.orientation.y)*Math.sin(this.orientation.z) + Math.cos(this.orientation.x)*Math.cos(this.orientation.z)) - z*Math.sin(this.orientation.x)*Math.cos(this.orientation.y)
-Z: x*(Math.sin(this.orientation.x)*Math.sin(this.orientation.z) - Math.sin(this.orientation.y)*Math.cos(this.orientation.x)*Math.cos(this.orientation.z)) + y*(Math.sin(this.orientation.x)*Math.cos(this.orientation.z) + Math.sin(this.orientation.y)*Math.sin(this.orientation.z)*Math.cos(this.orientation.x)) + z*Math.cos(this.orientation.x)*Math.cos(this.orientation.y)
+TODOS:
+- negative rotations set wrong order of elements in cube (maybe just make three normal rotations 90deg)
+- add interpolation to rotations (add slerp)
+- add control panel to rotate layers
+- recoginze which wall is facing foront to rotate wall according to frontal wall
+- add scrambling, and editor 
+- styles
+- refactor

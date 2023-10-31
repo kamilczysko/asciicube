@@ -42,11 +42,6 @@ export class SinglePiece {
         this.rotZ = Q.rotateZ(0)
 
         this.rotQ = this.rotX.mul(this.rotY).mul(this.rotZ)
-        
-        this.cox = this.rotQ.getX();
-        this.coy = this.rotQ.getY();
-        this.coz = this.rotQ.getZ();
-        this.cow = 1;
     }
 
     calcWall(cx, cy, cz, rotX, rotY, rotZ, char) {
@@ -57,11 +52,6 @@ export class SinglePiece {
         const rotationZ = Q.rotateZ(rotZ).normalize();
 
         const totalRot = rotationZ.mul(rotationY).mul(rotationX).normalize();
-
-        // this.rotQ.setX(this.cox);
-        // this.rotQ.setY(this.coy);
-        // this.rotQ.setZ(this.coz);
-        // this.rotQ.setW(this.cow);
 
         this.currentOrientation = totalRot.mul(this.rotQ).mul(this.currentOrientation).mul(totalRot.mul(this.rotQ).getInv())
 
@@ -82,7 +72,6 @@ export class SinglePiece {
                         char = " "
                     }
                     this.calcWall(this.position.x, b, c, rotation.x, rotation.y, rotation.z, char);
-                    // this.makeRot(this.position.x, b, c, char);
                 }
             }
         }
@@ -95,7 +84,6 @@ export class SinglePiece {
                         char = " "
                     }
                     this.calcWall(this.position.x + (2 * this.height), b, c, rotation.x, rotation.y, rotation.z, char);
-                    // this.makeRot(this.position.x + (2 * this.height), b, c, char);
                 }
             }
         }
@@ -109,8 +97,6 @@ export class SinglePiece {
                         char = " "
                     }
                     this.calcWall(a, this.position.y, c, rotation.x, rotation.y, rotation.z, char);
-                    // this.makeRot(a, this.position.y, c, char);
-
                 }
             }
         }
@@ -124,8 +110,6 @@ export class SinglePiece {
                         char = " "
                     }
                     this.calcWall(a, this.position.y + (2 * this.height), c, rotation.x, rotation.y, rotation.z, char);
-                    // this.makeRot(a, this.position.y + (2 * this.height), c, char);
-
                 }
             }
         }
@@ -139,8 +123,6 @@ export class SinglePiece {
                         char = " "
                     }
                     this.calcWall(a, b, this.position.z, rotation.x, rotation.y, rotation.z, char);
-                    // this.makeRot(a, b, this.position.z, char);
-
                 }
             }
         }
@@ -154,7 +136,6 @@ export class SinglePiece {
                         char = " "
                     }
                     this.calcWall(a, b, this.position.z + (2 * this.height), rotation.x, rotation.y, rotation.z, char);
-                    // this.makeRot(a, b, this.position.z + (2 * this.height), char);
                 }
             }
         }
@@ -168,8 +149,6 @@ export class SinglePiece {
                     this.axisRotations.z = 0
                 }
                 this.axisRotations.z += Math.PI / 2
-                // this.coz += 1 * direction;
-                // this.rotQ = (this.rotQ).mul(Q.rotateZ(this.axisRotations.z))
                 this.rotQ = Q.rotateZ(Math.PI/2).mul(this.rotQ)
                 
                 break;
@@ -178,9 +157,6 @@ export class SinglePiece {
                     this.axisRotations.x = 0;
                 }
                 this.axisRotations.x += Math.PI / 2
-                // this.cow += 1 * direction;
-                // this.cox += 1 * direction;
-                // this.rotQ = (this.rotQ).mul(Q.rotateX(this.axisRotations.x))
                 this.rotQ = Q.rotateX(Math.PI/2).mul(this.rotQ)
 
                 break;
@@ -189,94 +165,10 @@ export class SinglePiece {
                     this.axisRotations.y = 0
                 }
                 this.axisRotations.y += Math.PI / 2
-                // this.coy += 1 * direction;
-                // this.rotQ = (this.rotQ).mul(Q.rotateY(this.axisRotations.y))
                 this.rotQ = Q.rotateY(Math.PI/2).mul(this.rotQ)
 
                 break;
         }
         this.updateOrientation(axis, direction);
     }
-
-    setI(i){
-        this.cox += 0.1;
-    }
-    setJ(j){
-        this.coy += 0.1;
-    }
-    setK(k){
-        this.coz += 0.1;
-    }
-    setW(w){
-        this.cow += 0.1;
-    }
-
-    getOrientation() {
-        console.log(this.orientation[0])
-        console.log(this.orientation[1])
-        console.log(this.orientation[2])
-        // this.updateOrientation(axis, direction);    
-    }
-
-    updateOrientation(axis, direction) {
-        let res = null;
-        switch (axis) {
-            case "x":
-                res = this.dot(this.rotateXMatrix(direction), this.orientation);
-                break;
-            case "y":
-                res = this.dot(this.rotateYMatrix(direction), this.orientation);
-                break;
-            case "z":
-                res = this.dot(this.rotateZMatrix(direction), this.orientation);
-                break;
-        }
-        this.orientation = res
-        console.log(this.orientation[0])
-        console.log(this.orientation[1])
-        console.log(this.orientation[2])
-        console.log("++++")
-    }
-
-    rotateXMatrix(direction = 1) {
-        const angle = Math.PI / 2 * direction
-        return [
-            [1, 0, 0],
-            [0, Math.cos(angle), - Math.sin(angle)],
-            [0, Math.sin(angle), Math.cos(angle)]
-        ]
-    }
-
-    rotateYMatrix(direction = 1) {
-        const angle = Math.PI / 2 * direction;
-        return [
-            [Math.cos(angle), 0, Math.sin(angle)],
-            [0, 1, 0],
-            [-Math.sin(angle), 0, Math.cos(angle)]
-        ]
-    }
-
-    rotateZMatrix(direction = 1) {
-        const angle = Math.PI / 2 * direction;
-        return [
-            [Math.cos(angle), -Math.sin(angle), 0],
-            [Math.sin(angle), Math.cos(angle), 0],
-            [0, 0, 1]
-        ]
-    }
-
-    dot(mat1, mat2) {
-        const result = [];
-        for (let i = 0; i < 3; i++) {
-            result[i] = [];
-            for (let j = 0; j < 3; j++) {
-                result[i][j] = 0;
-                for (let k = 0; k < 3; k++) {
-                    result[i][j] += parseInt(Math.round(mat1[i][k] * mat2[k][j]));
-                }
-            }
-        }
-        return result;
-    }
-
 } 
