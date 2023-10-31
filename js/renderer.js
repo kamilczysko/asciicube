@@ -1,7 +1,7 @@
 import { Cube } from "./cube.js";
 
-const width = 150;
-const height = 150;
+const width = 120;
+const height = 120;
 const screenSize = (width) * height;
 
 let a = .3;

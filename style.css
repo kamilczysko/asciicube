@@ -91,11 +91,14 @@ body {
 }
 
 .scramble {
-  width: 100%;
+  width: 23%;
   display: flex;
   margin-bottom: 4px;
   padding: 3px;
   font-size: 20px;
+  position: absolute;
+  top: 20px;
+  right: 0px;
 }
 
 .scramble input {
@@ -128,7 +131,7 @@ body {
 
 .info {
   position: absolute;
-  bottom: 0px;
-  left: 10px;
+  bottom:0px;
+  right: 10px;
   font-weight: 100;
 }

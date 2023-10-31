@@ -25,11 +25,10 @@
 
 <body style="display: flex;">
     <textarea class="canvas" id="canvas" cols="150" rows="10"></textarea>
-    <p class="info">Drag mouse across cube to move it!</p>
     <script type="module" src="./js/renderer.js"></script>
     <div class="panel">
         <div class="scramble">
-            <input type="text" placeholder="RUR'U'R'FR2U'R'U'RUR'F'"><button>OK</button>
+            <input type="text" placeholder="RUR'U'R'FR2U'R'U'RUR'F'" id="scrambleInput"><button id="scrambleOk">OK</button>
         </div>
         <div class="controler">
             <div class="row">
@@ -83,6 +82,7 @@
                 </div>
             </div>
         </div>
+        <p class="info">Drag mouse across cube to move it!</p>
     </div>
 
 </body>
