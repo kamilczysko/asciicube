@@ -27,16 +27,6 @@
     <textarea class="canvas" id="canvas" cols="150" rows="10"></textarea>
     <p class="info">Drag mouse across cube to move it!</p>
     <script type="module" src="./js/renderer.js"></script>
-    <div style="display: none;">
-
-        <button id="rot1">ROT X</button>
-        <button id="rot11">ROT -X</button>
-        <button id="rot2">ROT Y</button>
-        <button id="rot22">ROT -Y</button>
-        <button id="rot3">ROT Z</button>
-        <button id="rot33">ROT -Z</button>
-
-    </div>
     <div class="panel">
         <div class="scramble">
             <input type="text" placeholder="RUR'U'R'FR2U'R'U'RUR'F'"><button>OK</button>
@@ -44,42 +34,52 @@
         <div class="controler">
             <div class="row">
                 <div class="cell">
-                    <button style="transform:rotate(270deg);"><img src="./assets/arrow.svg" alt=""></button>
+                    <button style="transform:rotate(270deg);" id="rotLeftUp"><img src="./assets/arrow.svg"
+                            alt=""></button>
                 </div>
                 <div class="cell">
-                    <button style="transform: scaleX(-1);"><img src="./assets/arrow.svg" alt=""></button>
-                    <button style="transform:rotate(270deg);"><img src="./assets/arrow.svg" alt=""></button>
-                    <button><img src="./assets/arrow.svg" alt=""></button>
+                    <button style="transform: scaleX(-1);" id="rotTopLeft"><img src="./assets/arrow.svg"
+                            alt=""></button>
+                    <button style="transform:rotate(270deg);" id="rotMiddleUp"><img src="./assets/arrow.svg"
+                            alt=""></button>
+                    <button id="rotTopRight"><img src="./assets/arrow.svg" alt=""></button>
                 </div>
                 <div class="cell">
-                    <button style="transform:rotate(270deg);"><img src="./assets/arrow.svg" alt=""></button>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="cell">
-                    <button style="transform: scaleX(-1);"><img src="./assets/arrow.svg" alt=""></button>
-                </div>
-                <div class="cell">
-                    <button><img src="./assets/round-arrow.svg" alt=""></button>
-                    <button style="transform: scaleX(-1);"><img src="./assets/round-arrow.svg" alt=""></button>
-                </div>
-                <div class="cell">
-                    <button><img src="./assets/arrow.svg" alt=""></button>
+                    <button style="transform:rotate(270deg);" id="rotRightUp"><img src="./assets/arrow.svg"
+                            alt=""></button>
                 </div>
             </div>
 
             <div class="row">
                 <div class="cell">
-                    <button style="transform:rotate(90deg);"><img src="./assets/arrow.svg" alt=""></button>
+                    <button style="transform: scaleX(-1);" id="rotMiddleLeft"><img src="./assets/arrow.svg"
+                            alt=""></button>
                 </div>
                 <div class="cell">
-                    <button style="transform: scaleX(-1);"><img src="./assets/arrow.svg" alt=""></button>
-                    <button style="transform:rotate(90deg);"><img src="./assets/arrow.svg" alt=""></button>
-                    <button><img src="./assets/arrow.svg" alt=""></button>
+                    <button><img src="./assets/round-arrow.svg" alt="" id="rotFaceLeft"></button>
+                    <button style="transform: scaleX(-1);" id="rotFaceRight"><img src="./assets/round-arrow.svg"
+                            alt=""></button>
                 </div>
                 <div class="cell">
-                    <button style="transform:rotate(90deg);"><img src="./assets/arrow.svg" alt=""></button>
+                    <button><img src="./assets/arrow.svg" alt="" id="rotMiddleRight"></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell">
+                    <button style="transform:rotate(90deg);" id="rotLeftDown"><img src="./assets/arrow.svg"
+                            alt=""></button>
+                </div>
+                <div class="cell">
+                    <button style="transform: scaleX(-1);" id="rotBottomLeft"><img src="./assets/arrow.svg"
+                            alt=""></button>
+                    <button style="transform:rotate(90deg);" id="rotMiddleDown"><img src="./assets/arrow.svg"
+                            alt=""></button>
+                    <button><img src="./assets/arrow.svg" alt="" id="rotBottomRight"></button>
+                </div>
+                <div class="cell">
+                    <button style="transform:rotate(90deg);" id="rotRightDown"><img src="./assets/arrow.svg"
+                            alt=""></button>
                 </div>
             </div>
         </div>

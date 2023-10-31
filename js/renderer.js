@@ -70,33 +70,70 @@ document.getElementById("canvas").onmousemove = (event) => {
     }
 }
 
-document.getElementById("rot1").onclick = () => {
-    mainCube.rotateX(0, 1);
-}
-
-
-document.getElementById("rot2").onclick = () => {
+document.getElementById("rotTopLeft").onclick = () => {
     mainCube.rotateY(0, 1);
 }
 
-
-document.getElementById("rot3").onclick = () => {
-    mainCube.rotateZ(0, 1);
-}
-
-document.getElementById("rot11").onclick = () => {
-    mainCube.rotateX(0, -1);
-}
-
-
-document.getElementById("rot22").onclick = () => {
+document.getElementById("rotTopRight").onclick = () => {
     mainCube.rotateY(0, -1);
 }
 
+document.getElementById("rotLeftUp").onclick = () => {
+    mainCube.rotateX(0, -1);
+}
 
-document.getElementById("rot33").onclick = () => {
+document.getElementById("rotRightUp").onclick = () => {
+    mainCube.rotateX(2, -1);
+}
+
+document.getElementById("rotMiddleUp").onclick = () => {
+    mainCube.rotateX(1, -1);
+}
+
+document.getElementById("rotMiddleLeft").onclick = () => {
+    mainCube.rotateY(1, 1);
+}
+
+
+document.getElementById("rotMiddleRight").onclick = () => {
+    mainCube.rotateY(1, -1);
+}
+
+document.getElementById("rotFaceRight").onclick = () => {
+    mainCube.rotateZ(0, 1);
+}
+
+document.getElementById("rotFaceLeft").onclick = () => {
     mainCube.rotateZ(0, -1);
 }
+
+
+document.getElementById("rotLeftDown").onclick = () => {
+    mainCube.rotateX(0, 1);
+}
+
+document.getElementById("rotRightDown").onclick = () => {
+    mainCube.rotateX(2, 1);
+}
+
+document.getElementById("rotMiddleDown").onclick = () => {
+    mainCube.rotateX(1, 1);
+}
+
+document.getElementById("rotBottomLeft").onclick = () => {
+    mainCube.rotateY(2, 1);
+}
+
+document.getElementById("rotBottomRight").onclick = () => {
+    mainCube.rotateY(2, -1);
+}
+
+
+
+
+
+
+
 setInterval(() => {
     draw();
 }, 10);

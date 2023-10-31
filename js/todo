@@ -5,5 +5,7 @@ TODOS:
 - add control panel to rotate layers
 - recoginze which wall is facing foront to rotate wall according to frontal wall
 - add scrambling, and editor 
-- styles
++ styles - looks good for me XD
 - refactor
+- still rotattion of wrong cubelets sometimes
+- dont calculate frames when no action performed
