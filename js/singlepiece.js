@@ -51,18 +51,6 @@ export class SinglePiece {
 
         const totalRot = rotationZ.mul(rotationY).mul(rotationX).normalize();
 
-        // const startQuat = totalRot.mul(this.currentOrientation).mul(totalRot.getInv())
-        // const endQuat = totalRot.mul(this.rotQ).mul(this.currentOrientation).mul(totalRot.mul(this.rotQ).getInv())
-
-        // let animationCounter = 0;
-        // const animationFrames = setInterval(() => {
-        //     animationCounter = animationCounter + 0.1;
-        //     console.log(animationCounter)
-        //     if(animationCounter >= 1) {
-        //          clearInterval(animationFrames);
-        //     }
-        // }, 1000)
-
         this.currentOrientation = totalRot.mul(this.rotQ).mul(this.currentOrientation).mul(totalRot.mul(this.rotQ).getInv())
 
         const x = this.currentOrientation.x
@@ -155,12 +143,19 @@ export class SinglePiece {
         if (this.isRotating) { return; }
         switch (axis) {
             case "z":
-                this.rotQ = Q.rotateZ(Math.PI/2).mul(this.rotQ)
-                
+                let counter = 0.0;
+                const endQ = Q.rotateZ(Math.PI/2).mul(this.rotQ).normalize()
+
+                const interval = setInterval(() => {
+                    counter = counter + 0.1;
+                    this.rotQ = Q.slerp(this.rotQ.normalize(), endQ, .3)
+                    if(counter >= 2) {
+                        clearInterval(interval);
+                    }
+                }, 10);
                 break;
             case "x":
                 this.rotQ = Q.rotateX(Math.PI/2).mul(this.rotQ)
-
                 break;
             case "y":
                 this.rotQ = Q.rotateY(Math.PI/2).mul(this.rotQ)

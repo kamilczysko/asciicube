@@ -52,30 +52,28 @@ export class Q {
         return new Q(x, y, z, w);
     }
 
-    dot(quat) {
-        return this.w * quat.getW() + this.x * quat.getX() + this.y * quat.getY() + this.z * quat.getZ();
+    dot(q) {
+        return this.w * q.getW() + this.x * q.getX() + this.y * q.getY() + this.z * q.getZ();
     }
 
     static slerp(startQuat, endQuat, t) {
         const cosTheta = startQuat.dot(endQuat);
-        if (cosTheta > 0) {
+        if (cosTheta < 1) {
             const theta = Math.acos(cosTheta);
             const invSinTheta = 1 / Math.sin(theta);
             const c0 = Math.sin((1 - theta) * theta) * invSinTheta;
             const c1 = Math.sin(t * theta) * invSinTheta;
-            return startQuat.scalarMul(c0).sum(endQuat.scalarMul(c1))
-        } else {
-            return startQuat;
+            return startQuat.scale(c0).sum(endQuat.scale(c1)).normalize();
         }
-
+        return startQuat.normalize();
     }
 
-    scalarMul(coef) {
+    scale(coef) {
         return new Q(this.x * coef, this.y * coef, this.z * coef, this.w * coef);
     }
 
-    sum(quat) {
-        return new Q(this.x + quat.getX(), this.y + quat.getY(), this.z + quat.getZ(), this.w + quat.getW());
+    sum(q) {
+        return new Q(this.x + q.getX(), this.y + q.getY(), this.z + q.getZ(), this.w + q.getW());
     }
 
     static rotateX(angle) {
