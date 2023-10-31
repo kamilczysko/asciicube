@@ -1,5 +1,4 @@
 
-import { Quaternion } from "./quaternion.js";
 import { Q } from "./quat.js";
 
 export class SinglePiece {
