@@ -31,9 +31,9 @@ export class SinglePiece {
             [0, 0, 1]
         ]
         this.counter = 0;
-        this.rotXN = Q.rotateX(Math.PI/2)
-        this.rotYN = Q.rotateX(Math.PI/2)
-        this.rotZN = Q.rotateX(Math.PI/2)
+        this.rotXN = Q.rotateX(Math.PI / 2)
+        this.rotYN = Q.rotateX(Math.PI / 2)
+        this.rotZN = Q.rotateX(Math.PI / 2)
 
         this.rotX = Q.rotateX(0)
         this.rotY = Q.rotateY(0)
@@ -142,24 +142,33 @@ export class SinglePiece {
     async rotatePiece(axis = "z", direction = 1) {
         if (this.isRotating) { return; }
         switch (axis) {
-            case "z":
-                let counter = 0.0;
-                const endQ = Q.rotateZ(Math.PI/2).mul(this.rotQ).normalize()
-
-                const interval = setInterval(() => {
-                    counter = counter + 0.1;
-                    this.rotQ = Q.slerp(this.rotQ.normalize(), endQ, .3)
-                    if(counter >= 2) {
-                        clearInterval(interval);
-                    }
-                }, 10);
+            case "z": {
+                const endQ = Q.rotateZ(Math.PI / 2 * direction).mul(this.rotQ)
+                this.interpolateRotation(endQ)
+            }
                 break;
-            case "x":
-                this.rotQ = Q.rotateX(Math.PI/2).mul(this.rotQ)
+            case "x": {
+                const endQ = Q.rotateX(Math.PI / 2).mul(this.rotQ)
+                this.interpolateRotation(endQ);
+            }
                 break;
-            case "y":
-                this.rotQ = Q.rotateY(Math.PI/2).mul(this.rotQ)
+            case "y": {
+                const endQ = Q.rotateY(Math.PI / 2).mul(this.rotQ)
+                this.interpolateRotation(endQ);
+            }
                 break;
         }
+    }
+
+    interpolateRotation(endQ) {
+        let counter = 0.0;
+        const interval = setInterval(() => {
+            counter = counter + 0.4;
+            this.rotQ = Q.slerp(this.rotQ, endQ, .2)
+            if (counter >= 3) {
+                clearInterval(interval);
+                this.rotQ = endQ;
+            }
+        }, 50);
     }
 } 

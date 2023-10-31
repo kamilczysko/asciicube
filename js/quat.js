@@ -58,14 +58,11 @@ export class Q {
 
     static slerp(startQuat, endQuat, t) {
         const cosTheta = startQuat.dot(endQuat);
-        if (cosTheta < 1) {
-            const theta = Math.acos(cosTheta);
-            const invSinTheta = 1 / Math.sin(theta);
-            const c0 = Math.sin((1 - theta) * theta) * invSinTheta;
-            const c1 = Math.sin(t * theta) * invSinTheta;
-            return startQuat.scale(c0).sum(endQuat.scale(c1)).normalize();
-        }
-        return startQuat.normalize();
+        const theta = Math.acos(cosTheta);
+        const invSinTheta = 1 / Math.sin(theta);
+        const c0 = Math.sin((1 - theta) * theta) * invSinTheta;
+        const c1 = Math.sin(t * theta) * invSinTheta;
+        return startQuat.scale(c0).sum(endQuat.scale(c1)).normalize();
     }
 
     scale(coef) {
