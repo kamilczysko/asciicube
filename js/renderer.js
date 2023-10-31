@@ -29,10 +29,13 @@ const saveLocation = (ooz, char, x, y, callback) => {
 const data = { width: pieceWidth, distance: K2, save: saveLocation }
 
 const mainCube = new Cube(data);
+
 function draw() {
     output = Array(screenSize).fill(" ")
     zBuffer = Array(screenSize).fill(0)
+    
     mainCube.draw(a,b,c);
+
     let res = ""
     for (let au = 0; au < screenSize; au++) {
         res = res + output[au];

@@ -12,8 +12,6 @@ export class SinglePiece {
 
         this.position = { x: position.x, y: position.y, z: position.z }
 
-        this.axisRotations = { x: 0.0, y: 0.0, z: 0.0 }
-
         //visible walls
         this.top = visibleWalls.top;
         this.bottom = visibleWalls.bottom
@@ -52,6 +50,18 @@ export class SinglePiece {
         const rotationZ = Q.rotateZ(rotZ).normalize();
 
         const totalRot = rotationZ.mul(rotationY).mul(rotationX).normalize();
+
+        // const startQuat = totalRot.mul(this.currentOrientation).mul(totalRot.getInv())
+        // const endQuat = totalRot.mul(this.rotQ).mul(this.currentOrientation).mul(totalRot.mul(this.rotQ).getInv())
+
+        // let animationCounter = 0;
+        // const animationFrames = setInterval(() => {
+        //     animationCounter = animationCounter + 0.1;
+        //     console.log(animationCounter)
+        //     if(animationCounter >= 1) {
+        //          clearInterval(animationFrames);
+        //     }
+        // }, 1000)
 
         this.currentOrientation = totalRot.mul(this.rotQ).mul(this.currentOrientation).mul(totalRot.mul(this.rotQ).getInv())
 
@@ -145,30 +155,16 @@ export class SinglePiece {
         if (this.isRotating) { return; }
         switch (axis) {
             case "z":
-                if(this.axisRotations.z ==  2*Math.PI) {
-                    this.axisRotations.z = 0
-                }
-                this.axisRotations.z += Math.PI / 2
                 this.rotQ = Q.rotateZ(Math.PI/2).mul(this.rotQ)
                 
                 break;
             case "x":
-                if(this.axisRotations.x ==  2*Math.PI) {
-                    this.axisRotations.x = 0;
-                }
-                this.axisRotations.x += Math.PI / 2
                 this.rotQ = Q.rotateX(Math.PI/2).mul(this.rotQ)
 
                 break;
             case "y":
-                if(this.axisRotations.y ==  2*Math.PI) {
-                    this.axisRotations.y = 0
-                }
-                this.axisRotations.y += Math.PI / 2
                 this.rotQ = Q.rotateY(Math.PI/2).mul(this.rotQ)
-
                 break;
         }
-        this.updateOrientation(axis, direction);
     }
 } 

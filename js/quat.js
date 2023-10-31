@@ -6,7 +6,7 @@ export class Q {
         this.w = w;
     }
 
-    getX () {
+    getX() {
         return this.x;
     }
 
@@ -18,7 +18,7 @@ export class Q {
         return this.z;
     }
 
-    getW(){
+    getW() {
         return this.w;
     }
     setX(x) {
@@ -50,6 +50,32 @@ export class Q {
         const y = this.w * q.getY() - this.x * q.getZ() + this.y * q.getW() + this.z * q.getX();
         const z = this.w * q.getZ() + this.x * q.getY() - this.y * q.getX() + this.z * q.getW();
         return new Q(x, y, z, w);
+    }
+
+    dot(quat) {
+        return this.w * quat.getW() + this.x * quat.getX() + this.y * quat.getY() + this.z * quat.getZ();
+    }
+
+    static slerp(startQuat, endQuat, t) {
+        const cosTheta = startQuat.dot(endQuat);
+        if (cosTheta > 0) {
+            const theta = Math.acos(cosTheta);
+            const invSinTheta = 1 / Math.sin(theta);
+            const c0 = Math.sin((1 - theta) * theta) * invSinTheta;
+            const c1 = Math.sin(t * theta) * invSinTheta;
+            return startQuat.scalarMul(c0).sum(endQuat.scalarMul(c1))
+        } else {
+            return startQuat;
+        }
+
+    }
+
+    scalarMul(coef) {
+        return new Q(this.x * coef, this.y * coef, this.z * coef, this.w * coef);
+    }
+
+    sum(quat) {
+        return new Q(this.x + quat.getX(), this.y + quat.getY(), this.z + quat.getZ(), this.w + quat.getW());
     }
 
     static rotateX(angle) {
