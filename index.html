@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,15 +16,75 @@
     <title>Character cube</title>
     <link rel="icon" type="image/x-icon" href="./favicon.ico?">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,400;0,500;0,600;1,100;1,500&display=swap"
+        rel="stylesheet">
 </head>
+
 <body style="display: flex;">
     <textarea class="canvas" id="canvas" cols="150" rows="10"></textarea>
+    <p class="info">Drag mouse across cube to move it!</p>
     <script type="module" src="./js/renderer.js"></script>
-    <button id="rot1">ROT X</button>
-    <button id="rot11">ROT -X</button>
-    <button id="rot2">ROT Y</button>
-    <button id="rot22">ROT -Y</button>
-    <button id="rot3">ROT Z</button>
-    <button id="rot33">ROT -Z</button>
+    <div style="display: none;">
+
+        <button id="rot1">ROT X</button>
+        <button id="rot11">ROT -X</button>
+        <button id="rot2">ROT Y</button>
+        <button id="rot22">ROT -Y</button>
+        <button id="rot3">ROT Z</button>
+        <button id="rot33">ROT -Z</button>
+
+    </div>
+    <div class="panel">
+        <div class="scramble">
+            <input type="text" placeholder="RUR'U'R'FR2U'R'U'RUR'F'"><button>OK</button>
+        </div>
+        <div class="controler">
+            <div class="row">
+                <div class="cell">
+                    <button style="transform:rotate(270deg);"><img src="./assets/arrow.svg" alt=""></button>
+                </div>
+                <div class="cell">
+                    <button style="transform: scaleX(-1);"><img src="./assets/arrow.svg" alt=""></button>
+                    <button style="transform:rotate(270deg);"><img src="./assets/arrow.svg" alt=""></button>
+                    <button><img src="./assets/arrow.svg" alt=""></button>
+                </div>
+                <div class="cell">
+                    <button style="transform:rotate(270deg);"><img src="./assets/arrow.svg" alt=""></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell">
+                    <button style="transform: scaleX(-1);"><img src="./assets/arrow.svg" alt=""></button>
+                </div>
+                <div class="cell">
+                    <button><img src="./assets/round-arrow.svg" alt=""></button>
+                    <button style="transform: scaleX(-1);"><img src="./assets/round-arrow.svg" alt=""></button>
+                </div>
+                <div class="cell">
+                    <button><img src="./assets/arrow.svg" alt=""></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell">
+                    <button style="transform:rotate(90deg);"><img src="./assets/arrow.svg" alt=""></button>
+                </div>
+                <div class="cell">
+                    <button style="transform: scaleX(-1);"><img src="./assets/arrow.svg" alt=""></button>
+                    <button style="transform:rotate(90deg);"><img src="./assets/arrow.svg" alt=""></button>
+                    <button><img src="./assets/arrow.svg" alt=""></button>
+                </div>
+                <div class="cell">
+                    <button style="transform:rotate(90deg);"><img src="./assets/arrow.svg" alt=""></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
+
 </html>

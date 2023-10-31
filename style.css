@@ -1,3 +1,7 @@
+body {
+  font-family: 'Roboto Mono', monospace;
+}
+
 .canvas {
   -moz-user-select: none;
   -khtml-user-select: none;
@@ -12,4 +16,107 @@
   color: rgb(146, 146, 205);
   font-size: 10px;
   height: 95vh;
+  min-width: 60%;
+  max-width: 60%;
+  overflow: hidden;
+  letter-spacing: 2px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.controler {
+  width: 100%;
+  height: 90vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  background: none;
+}
+
+.panel {
+  width: 100%;
+  margin: auto;
+}
+
+.row {
+  background: rgba(104, 21, 160, 0.629);
+  width: 100%;
+  display: flex;
+  height: 100%;
+}
+
+.cell {
+  border: 3px solid black;
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.cell button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  cursor: pointer;
+  border: none;
+
+}
+
+.cell button img {
+  width: 20px;
+}
+
+.cell button:hover {
+  scale: 120%;
+}
+
+
+.cell button:active {
+  scale: 150%;
+}
+
+.scramble {
+  width: 100%;
+  display: flex;
+  margin-bottom: 4px;
+  padding: 3px;
+  font-size: 20px;
+}
+
+.scramble input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  font-size: 15px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.scramble button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: 'Roboto Mono', monospace;
+
+}
+
+.scramble button:hover {
+  scale: 110%;
+  font-weight: 200;
+}
+
+
+.scramble button:active {
+  scale: 140%;
+  font-weight: 500;
+}
+
+.info {
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  font-weight: 100;
 }

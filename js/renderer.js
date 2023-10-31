@@ -1,24 +1,24 @@
 import { Cube } from "./cube.js";
 
-const width = 200;
-const height = 200;
+const width = 150;
+const height = 150;
 const screenSize = (width) * height;
 
-let a = 0;
-let b = 0;
-let c = 0;
+let a = .3;
+let b = -.3;
+let c = .0;
 
 const pieceWidth = 8;
 
-let K2 = 450;
+let K2 = 150;
 const K1 = width * K2 * 3 / (8 * (pieceWidth ** 2));
 
 let output = Array(screenSize).fill(" ")
 let zBuffer = Array(screenSize).fill(0)
 
 const saveLocation = (ooz, char, x, y, callback) => {
-    const xp = parseInt((width / 2.5) + (K1 * ooz * x));
-    const yp = parseInt((height / 5) + (K1 * ooz * y));
+    const xp = parseInt((width / 2) + (K1 * ooz * x));
+    const yp = parseInt((height / 4) + (K1 * ooz * y));
     const index = parseInt(yp * width + xp)
     if (zBuffer[index] < ooz) {
         zBuffer[index] = ooz;

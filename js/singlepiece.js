@@ -171,6 +171,6 @@ export class SinglePiece {
                 this.rotQ = endQ;
                 this.isRotating = false;
             }
-        }, 50);
+        }, 5);
     }
 } 
