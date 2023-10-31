@@ -148,12 +148,12 @@ export class SinglePiece {
             }
                 break;
             case "x": {
-                const endQ = Q.rotateX(Math.PI / 2).mul(this.rotQ)
+                const endQ = Q.rotateX(Math.PI / 2 * direction).mul(this.rotQ)
                 this.interpolateRotation(endQ);
             }
                 break;
             case "y": {
-                const endQ = Q.rotateY(Math.PI / 2).mul(this.rotQ)
+                const endQ = Q.rotateY(Math.PI / 2 * direction).mul(this.rotQ)
                 this.interpolateRotation(endQ);
             }
                 break;
@@ -162,12 +162,14 @@ export class SinglePiece {
 
     interpolateRotation(endQ) {
         let counter = 0.0;
+        this.isRotating = true;
         const interval = setInterval(() => {
             counter = counter + 0.4;
             this.rotQ = Q.slerp(this.rotQ, endQ, .2)
             if (counter >= 3) {
                 clearInterval(interval);
                 this.rotQ = endQ;
+                this.isRotating = false;
             }
         }, 50);
     }

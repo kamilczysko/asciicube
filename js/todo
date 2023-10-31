@@ -1,7 +1,7 @@
 TODOS:
-- negative rotations set wrong order of elements in cube (maybe just make three normal rotations 90deg)
-- add interpolation to rotations (add slerp)
-- make rotation even
++ negative rotations set wrong order of elements in cube (maybe just make three normal rotations 90deg) ++ ugly solution but working
++ add interpolation to rotations (add slerp) ++
+- make rotation even (so far so good maybe some tuning in slerp)
 - add control panel to rotate layers
 - recoginze which wall is facing foront to rotate wall according to frontal wall
 - add scrambling, and editor 

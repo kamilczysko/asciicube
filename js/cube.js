@@ -119,7 +119,10 @@ export class Cube {
         for (let c = 1; c <= arr.length; c++) {
             if (c == 5) { continue; }
             if (dir == -1) {
-                this.cube[arr[c - 1].i][arr[c - 1].j][layer] = arr[((c * 3) % 10) - 1].element;
+                // this.cube[arr[c - 1].i][arr[c - 1].j][layer] = arr[((c * 3) % 10) - 1].element;
+                this.cube[arr[c - 1].i][arr[c - 1].j][layer] = arr[((c * 7) % 10) - 1].element;
+                this.cube[arr[c - 1].i][arr[c - 1].j][layer] = arr[((c * 7) % 10) - 1].element;
+                this.cube[arr[c - 1].i][arr[c - 1].j][layer] = arr[((c * 7) % 10) - 1].element;
             } else {
                 this.cube[arr[c - 1].i][arr[c - 1].j][layer] = arr[((c * 7) % 10) - 1].element;
             }
@@ -146,7 +149,10 @@ export class Cube {
                 continue;
             }
             if (dir == -1) {
-                this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
+                // this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
+                this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 7) % 10) - 1].element;
+                this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 7) % 10) - 1].element;
+                this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 7) % 10) - 1].element;
             } else {
                 this.cube[arr[c - 1].i][layer][arr[c - 1].j] = arr[((c * 7) % 10) - 1].element;
             }
@@ -173,6 +179,9 @@ export class Cube {
                     continue;
                 }
                 if (dir == -1) {
+                    // this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
+                    this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
+                    this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
                     this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
                 } else {
                     this.cube[layer][arr[c - 1].i][arr[c - 1].j] = arr[((c * 3) % 10) - 1].element;
