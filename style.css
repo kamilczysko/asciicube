@@ -135,3 +135,7 @@ body {
   right: 10px;
   font-weight: 100;
 }
+
+.scrambleInput { 
+  width: 100%;
+}
