@@ -6,12 +6,24 @@ const scrambles = [
     "L' U D B2 R' U' B D B U2 R' D2 R L' U R2 B2 L' U2 F B' D B2 D L"
 ]
 
-const randomScramble = parseInt(Math.floor(Math.random() * (scrambles.length-1)))
+const randomScramble = parseInt(Math.floor(Math.random() * (scrambles.length - 1)))
 document.getElementById("scrambleInput").value = scrambles[randomScramble];
 
 let scrambleExpression = []
 
-document.getElementById("scrambleOk").onclick = () => {
-    scrambleExpression = document.getElementById("scrambleInput").value.split(" ");
-    console.log(scrambleExpression)
+export default function initScrambling(cube) {
+    document.getElementById("scrambleOk").onclick = () => {
+        scrambleExpression = document.getElementById("scrambleInput").value.split(" ");
+        scrambleExpression.forEach(element => {
+            const wall = element[0];
+            const secondElement = element[1] ? element[1] : 1
+            if (secondElement == "'") {
+                cube.rotateWall(wall, 1, -1)
+            } else if (element) {
+                cube.rotateWall(wall, secondElement)
+            } else {
+                cube.rotateWall(wall)
+            }
+        });
+    }
 }

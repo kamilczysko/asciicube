@@ -103,8 +103,8 @@ export class Cube {
         }
     }
 
-    rotateX(layer, direction=1) {
-        switch(this.actualFrontal) {
+    rotateX(layer, direction = 1) {
+        switch (this.actualFrontal) {
             case "F": this.performXRotation(layer, direction); break;
             case "B": this.performXRotation(2 - layer, -direction); break;
             case "L": this.performZRotation(2 - layer, - direction); break;
@@ -139,8 +139,8 @@ export class Cube {
         }
     }
 
-    rotateY(layer, direction=1) {
-        switch(this.actualFrontal) {
+    rotateY(layer, direction = 1) {
+        switch (this.actualFrontal) {
             case "F": this.performYRotation(layer, direction); break;
             case "B": this.performYRotation(2 - layer, -direction); break;
             case "L": this.performYRotation(layer, direction); break;
@@ -176,8 +176,8 @@ export class Cube {
         }
     }
 
-    rotateZ(layer, direction=1) {
-        switch(this.actualFrontal) {
+    rotateZ(layer, direction = 1) {
+        switch (this.actualFrontal) {
             case "F": this.performZRotation(layer, direction); break;
             case "B": this.performZRotation(2 - layer, -direction); break;
             case "L": this.performXRotation(layer, direction); break;
@@ -217,35 +217,58 @@ export class Cube {
 
     updateOrientation(a, b, c) {
         const xz = Math.round(Math.sin(b));
-        const yz = Math.round(-Math.sin(a)*Math.cos(b));
-        const zz = Math.round(Math.cos(a)*Math.cos(b));
+        const yz = Math.round(-Math.sin(a) * Math.cos(b));
+        const zz = Math.round(Math.cos(a) * Math.cos(b));
 
-        if(yz == -1) {
+        if (yz == -1) {
             console.log("top");
             document.getElementById("facingWall").innerText = "top wall"
             this.actualFrontal = "U";
-        } else  if(yz == 1) {
+        } else if (yz == 1) {
             document.getElementById("facingWall").innerText = "bottom wall"
             console.log("bottom");
             this.actualFrontal = "D"
-        } else  if(zz == 1) {
+        } else if (zz == 1) {
             console.log("front");
             document.getElementById("facingWall").innerText = "front wall"
             this.actualFrontal = "F"
-        } else  if(zz == -1) {
+        } else if (zz == -1) {
             console.log("back");
             document.getElementById("facingWall").innerText = "back wall"
             this.actualFrontal = "B"
-        } else  if(xz == 1) {
+        } else if (xz == 1) {
             console.log("right");
             document.getElementById("facingWall").innerText = "right wall"
             this.actualFrontal = "R"
-        } else  if(xz == -1) {
+        } else if (xz == -1) {
             console.log("left");
             document.getElementById("facingWall").innerText = "left wall"
             this.actualFrontal = "L"
         }
+    }
 
-
+    rotateWall(wall, numberOfRoattions = 1, direction = 1) {
+        for (let i = 0; i < numberOfRoattions; i++) {
+            switch (wall) {
+                case "F":
+                    this.performZRotation(0, direction);
+                    break;
+                case "B":
+                    this.performZRotation(2, direction);
+                    break;
+                case "L":
+                    this.performXRotation(0, direction);
+                    break;
+                case "R":
+                    this.performXRotation(2, direction);
+                    break;
+                case "U":
+                    this.performYRotation(0, direction);
+                    break;
+                case "D":
+                    this.performYRotation(2, direction);
+                    break;
+            }
+        }
     }
 }

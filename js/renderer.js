@@ -1,5 +1,5 @@
 import { Cube } from "./cube.js";
-
+import initScrambling from "./scrambler.js"
 const width = 120;
 const height = 120;
 const screenSize = (width) * height;
@@ -127,11 +127,7 @@ document.getElementById("rotBottomRight").onclick = () => {
     mainCube.rotateY(2, -1);
 }
 
-
-
-
-
-
+initScrambling(mainCube);
 
 setInterval(() => {
     draw();

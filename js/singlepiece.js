@@ -139,7 +139,7 @@ export class SinglePiece {
         }
     }
 
-    async rotatePiece(axis = "z", direction = 1) {
+    rotatePiece(axis = "z", direction = 1) {
         if (this.isRotating) { return; }
         switch (axis) {
             case "z": {
