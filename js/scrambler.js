@@ -9,6 +9,9 @@ const scrambles = [
 const randomScramble = parseInt(Math.floor(Math.random() * (scrambles.length-1)))
 document.getElementById("scrambleInput").value = scrambles[randomScramble];
 
-document.getElementById("scrambleOk").onclick = () => {
+let scrambleExpression = []
 
+document.getElementById("scrambleOk").onclick = () => {
+    scrambleExpression = document.getElementById("scrambleInput").value.split(" ");
+    console.log(scrambleExpression)
 }

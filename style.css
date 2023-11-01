@@ -141,5 +141,5 @@ body {
 }
 
 #facingWall::before {
-  content: "Actual wall:";
+  content: "";
 }

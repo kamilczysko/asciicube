@@ -107,10 +107,10 @@ export class Cube {
         switch(this.actualFrontal) {
             case "F": this.performXRotation(layer, direction); break;
             case "B": this.performXRotation(2 - layer, -direction); break;
-            case "L": this.performZRotation(layer, direction); break;
-            case "R": this.performZRotation(2 - layer, -direction); break;
+            case "L": this.performZRotation(2 - layer, - direction); break;
+            case "R": this.performZRotation(layer, direction); break;
             case "U": this.performXRotation(layer, direction); break;
-            case "D": this.performXRotation(2 - layer, -direction); break;
+            case "D": this.performXRotation(layer, direction); break;
         }
     }
 
