@@ -1,4 +1,5 @@
 import { SinglePiece } from "./singlepiece.js";
+
 export class Cube {
     constructor(persistData) {
         this.offset = 0;
