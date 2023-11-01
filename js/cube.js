@@ -33,6 +33,8 @@ export class Cube {
         this.c32 = null;
         this.c33 = null;
         this.cube = this.initCube();
+
+        this.actualFrontal = "F";
     }
 
     initCube() {
@@ -101,7 +103,18 @@ export class Cube {
         }
     }
 
-    rotateX(layer, direction = 1) {
+    rotateX(layer, direction=1) {
+        switch(this.actualFrontal) {
+            case "F": this.performXRotation(layer, direction); break;
+            case "B": this.performXRotation(2 - layer, -direction); break;
+            case "L": this.performZRotation(layer, direction); break;
+            case "R": this.performZRotation(2 - layer, -direction); break;
+            case "U": this.performXRotation(layer, direction); break;
+            case "D": this.performXRotation(2 - layer, -direction); break;
+        }
+    }
+
+    performXRotation(layer, direction = 1) {
         const recalculation = []
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
@@ -126,7 +139,17 @@ export class Cube {
         }
     }
 
-    rotateY(layer, direction = 1) {
+    rotateY(layer, direction=1) {
+        switch(this.actualFrontal) {
+            case "F": this.performYRotation(layer, direction); break;
+            case "B": this.performYRotation(2 - layer, -direction); break;
+            case "L": this.performYRotation(layer, direction); break;
+            case "R": this.performYRotation(2 - layer, -direction); break;
+            case "U": this.performZRotation(layer, direction); break;
+            case "D": this.performZRotation(2 - layer, -direction); break;
+        }
+    }
+    performYRotation(layer, direction = 1) {
         const recalculation = [];
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
@@ -153,7 +176,18 @@ export class Cube {
         }
     }
 
-    rotateZ(layer, direction = 1) {
+    rotateZ(layer, direction=1) {
+        switch(this.actualFrontal) {
+            case "F": this.performZRotation(layer, direction); break;
+            case "B": this.performZRotation(2 - layer, -direction); break;
+            case "L": this.performXRotation(layer, direction); break;
+            case "R": this.performXRotation(2 - layer, -direction); break;
+            case "U": this.performYRotation(layer, direction); break;
+            case "D": this.performYRotation(2 - layer, -direction); break;
+        }
+    }
+
+    performZRotation(layer, direction = 1) {
         const recalculation = [];
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
@@ -179,5 +213,39 @@ export class Cube {
                 }
             }
         }
+    }
+
+    updateOrientation(a, b, c) {
+        const xz = Math.round(Math.sin(b));
+        const yz = Math.round(-Math.sin(a)*Math.cos(b));
+        const zz = Math.round(Math.cos(a)*Math.cos(b));
+
+        if(yz == -1) {
+            console.log("top");
+            document.getElementById("facingWall").innerText = "top wall"
+            this.actualFrontal = "U";
+        } else  if(yz == 1) {
+            document.getElementById("facingWall").innerText = "bottom wall"
+            console.log("bottom");
+            this.actualFrontal = "D"
+        } else  if(zz == 1) {
+            console.log("front");
+            document.getElementById("facingWall").innerText = "front wall"
+            this.actualFrontal = "F"
+        } else  if(zz == -1) {
+            console.log("back");
+            document.getElementById("facingWall").innerText = "back wall"
+            this.actualFrontal = "B"
+        } else  if(xz == 1) {
+            console.log("right");
+            document.getElementById("facingWall").innerText = "right wall"
+            this.actualFrontal = "R"
+        } else  if(xz == -1) {
+            console.log("left");
+            document.getElementById("facingWall").innerText = "left wall"
+            this.actualFrontal = "L"
+        }
+
+
     }
 }

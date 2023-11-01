@@ -7,9 +7,8 @@ const scrambles = [
 ]
 
 const randomScramble = parseInt(Math.floor(Math.random() * (scrambles.length-1)))
-console.log(randomScramble)
 document.getElementById("scrambleInput").value = scrambles[randomScramble];
 
 document.getElementById("scrambleOk").onclick = () => {
-    
+
 }

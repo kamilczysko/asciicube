@@ -34,7 +34,7 @@ function draw() {
     output = Array(screenSize).fill(" ")
     zBuffer = Array(screenSize).fill(0)
 
-    mainCube.draw(a,b,c);
+    mainCube.draw(a, b, c);
 
     let res = ""
     for (let au = 0; au < screenSize; au++) {
@@ -57,8 +57,7 @@ document.getElementById("canvas").onmousedown = (event) => {
 
 document.getElementById("canvas").onmouseup = (event) => {
     isMouseDown = false;
-    mouseEnd.x = event.clientX;
-    mouseEnd.y = event.clientY;
+    mainCube.updateOrientation(a,b,0);
 }
 
 document.getElementById("canvas").onmousemove = (event) => {

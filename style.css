@@ -139,3 +139,7 @@ body {
 .scrambleInput { 
   width: 100%;
 }
+
+#facingWall::before {
+  content: "Actual wall:";
+}
